@@ -8,5 +8,7 @@ class ImageProcessor:
 
     def read_image(self, image_path: str) -> None:
         self.image = np.array(Image.open(image_path))
-
+    
+    def mono_image(self) -> None:
+        self.image = self.image.convert('1')
 
