@@ -11,3 +11,4 @@ class ImageProcessor:
     
     def mono_image(self) -> None:
         self.image = self.image.convert('1')
+
