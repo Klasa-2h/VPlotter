@@ -12,8 +12,7 @@ def main() -> None:
     img_processor.read_image(image_path)
     img_processor.zmiana_rozmiaru()
     img_processor.mono_image()
-
-    print(img_processor.image)
+    img_processor.image.show()
 
 
 if __name__ == "__main__":
