@@ -31,5 +31,3 @@ class ImageProcessor:
                 nowa_jasnosc = int(jasnosc * gorny_limit // 255)
                 piksele[x, y] = nowa_jasnosc
         self.image = self.image
-
-
