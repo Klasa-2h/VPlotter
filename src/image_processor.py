@@ -50,3 +50,14 @@ class ImageProcessor:
             luk = []
 
         return luki
+
+    def process_intensity_scale(self):
+        gorny_limit = maksymalne_natezenie_barw
+        szerokosc, wysokosc = self.image.size
+        piksele = np.array(self.image)
+        for y in range(wysokosc):
+            for x in range(szerokosc):
+                jasnosc = piksele[y, x]
+                nowa_jasnosc = int(jasnosc * gorny_limit // 255)
+                piksele[y, x] = nowa_jasnosc
+        self.image = Image.fromarray(piksele)
