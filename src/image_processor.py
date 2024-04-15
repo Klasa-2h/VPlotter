@@ -46,9 +46,7 @@ class ImageProcessor:
             else:
                 luki.append(luk)
             r += odleglosc_miedzy_lukami
-            print(r, len(luk))
             luk = []
-
         return luki
 
     def process_intensity_scale(self):

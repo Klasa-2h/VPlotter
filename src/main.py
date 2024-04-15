@@ -13,8 +13,8 @@ def main() -> None:
     img_processor.zmiana_rozmiaru()
     img_processor.mono_image()
     img_processor.process_intensity_scale()
-    print(img_processor.podziel_na_luki())
-    # img_processor.image.show()
+    luki = img_processor.podziel_na_luki()
+    img_processor.image.show()
 
 
 if __name__ == "__main__":
