@@ -1,6 +1,7 @@
 from PIL import Image
 import numpy as np
 from config import pikseli_pionowo
+from config import maksymalne_natezenie_barw
 
 
 class ImageProcessor:
@@ -19,4 +20,14 @@ class ImageProcessor:
     
     def mono_image(self) -> None:
         self.image = self.image.convert('1')
-
+    
+    def process_intensity_scale(self):
+        gorny_limit = maksymalne_natezenie_barw
+        szerokosc, wysokosc = self.image.size
+        piksele = self.image.load()
+        for y in range(wysokosc):
+            for x in range(szerokosc):
+                jasnosc = piksele[x, y]
+                nowa_jasnosc = int(jasnosc * gorny_limit // 255)
+                piksele[x, y] = nowa_jasnosc
+        self.image = self.image
