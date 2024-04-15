@@ -1,7 +1,6 @@
 from PIL import Image
 import numpy as np
-from config import pikseli_pionowo
-from config import maksymalne_natezenie_barw
+from config import pikseli_pionowo, maksymalne_natezenie_barw
 
 
 class ImageProcessor:
@@ -30,4 +29,4 @@ class ImageProcessor:
                 jasnosc = piksele[x, y]
                 nowa_jasnosc = int(jasnosc * gorny_limit // 255)
                 piksele[x, y] = nowa_jasnosc
-        self.image = self.image
+       
