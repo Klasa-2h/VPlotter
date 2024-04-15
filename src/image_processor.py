@@ -41,9 +41,12 @@ class ImageProcessor:
                 for j in range(len(img[0])):
                     if abs(r - math.sqrt((start_y + i*rozmiar_piksela + rozmiar_piksela/2) ** 2 + (start_x + j*rozmiar_piksela + rozmiar_piksela/2)**2)) <= odleglosc_miedzy_lukami/2:
                         luk.append(img[i][j])
-                        print(r, i, j)
             if len(luk) == 0:
                 czy_pusty = True
             else:
                 luki.append(luk)
             r += odleglosc_miedzy_lukami
+            print(r, len(luk))
+            luk = []
+
+        return luki
