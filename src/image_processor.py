@@ -3,6 +3,7 @@ import math
 from PIL import Image
 import numpy as np
 from config import *
+from src.luk import Luk
 
 
 class ImageProcessor:
@@ -28,23 +29,38 @@ class ImageProcessor:
         self.image = self.image.convert('L')
 
     def podziel_na_luki(self):
-        r1 = round(math.sqrt(start_x ** 2 + (start_y + rozmiar_piksela / 2) ** 2), 1)
-        r2 = round(math.sqrt(start_x ** 2 + (start_y + rozmiar_piksela / 2 + rozmiar_piksela) ** 2), 1)
-        odleglosc_miedzy_lukami = round(r2 - r1, 1)
+        r1 = round(math.sqrt(start_x ** 2 + (start_y + rozmiar_piksela / 2) ** 2), 3)
+        r2 = round(math.sqrt(start_x ** 2 + (start_y + rozmiar_piksela / 2 + rozmiar_piksela) ** 2), 3)
+        odleglosc_miedzy_lukami = round(r2 - r1, 2)
         r = r1
         img = np.array(self.image)
         luki = []
         luk = []
         czy_pusty = False
         while not czy_pusty:
+            sx = None
+            sy = None
+            ex = None
+            ey = None
             for i in range(len(img)):
-                for j in range(len(img[0])):
-                    if abs(r - math.sqrt((start_y + i*rozmiar_piksela + rozmiar_piksela/2) ** 2 + (start_x + j*rozmiar_piksela + rozmiar_piksela/2)**2)) <= odleglosc_miedzy_lukami/2:
+                for j in range(len(img[0])-1, -1, -1):
+                    if (abs(r - math.sqrt((start_y + i*rozmiar_piksela + rozmiar_piksela/2) ** 2 +
+                                          (start_x + j*rozmiar_piksela + rozmiar_piksela/2)**2))
+                            <= odleglosc_miedzy_lukami/2):
+
                         luk.append(img[i][j])
+
+                        if sx is None and sy is None:
+                            sx = i
+                            sy = j
+
+                        ex = i
+                        ey = j
+
             if len(luk) == 0:
                 czy_pusty = True
             else:
-                luki.append(luk)
+                luki.append(Luk(luk[::-1], sx*rozmiar_piksela+start_x, sy*rozmiar_piksela+start_y, ex*rozmiar_piksela+start_x, ey*rozmiar_piksela+start_y, r))
             r += odleglosc_miedzy_lukami
             luk = []
         return luki

@@ -14,7 +14,8 @@ def main() -> None:
     img_processor.mono_image()
     img_processor.process_intensity_scale()
     luki = img_processor.podziel_na_luki()
-    img_processor.image.show()
+    for luk in luki:
+        print(luk.angle, luk.radius, luk.dlugosc_luku)
 
 
 if __name__ == "__main__":
