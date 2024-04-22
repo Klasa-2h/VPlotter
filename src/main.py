@@ -13,7 +13,7 @@ def main() -> None:
     img_processor.zmiana_rozmiaru()
     img_processor.mono_image()
     img_processor.process_intensity_scale()
-    luki = img_processor.podziel_na_luki()
+    odleglosc_miedzy_lukami, luki = img_processor.podziel_na_luki()
     for luk in luki:
         print(luk.angle, luk.radius, luk.dlugosc_luku)
 
