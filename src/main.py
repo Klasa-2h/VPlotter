@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-def main():
-    pass
-
-if __name__ == "__main__":
-    main()
-=======
 import os
 from image_processor import ImageProcessor
 from config import *
