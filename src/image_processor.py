@@ -28,7 +28,7 @@ class ImageProcessor:
     def mono_image(self) -> None:
         self.image = self.image.convert('L')
 
-    def podziel_na_luki(self) -> tuple[float, list[Luk]]:
+    def podziel_na_luki(self) -> list[Luk]:
         r1 = round(math.sqrt(start_x ** 2 + (start_y + rozmiar_piksela / 2) ** 2), 3)
         r2 = round(math.sqrt(start_x ** 2 + (start_y + rozmiar_piksela / 2 + rozmiar_piksela) ** 2), 3)
         odleglosc_miedzy_lukami = round(r2 - r1, 2)
@@ -69,9 +69,9 @@ class ImageProcessor:
             r += odleglosc_miedzy_lukami
             luk = []
 
-        return odleglosc_miedzy_lukami, luki
+        return luki
 
-    def process_intensity_scale(self):
+    def process_intensity_scale_and_reverse(self):
         gorny_limit = maksymalne_natezenie_barw
         szerokosc, wysokosc = self.image.size
         piksele = np.array(self.image)
@@ -79,5 +79,5 @@ class ImageProcessor:
             for x in range(szerokosc):
                 jasnosc = piksele[y, x]
                 nowa_jasnosc = int(jasnosc * gorny_limit // 255)
-                piksele[y, x] = nowa_jasnosc
+                piksele[y, x] = gorny_limit - nowa_jasnosc
         self.image = Image.fromarray(piksele)
