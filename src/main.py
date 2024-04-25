@@ -12,7 +12,6 @@ def main() -> None:
     luki = img_processor.podziel_na_luki()
     generator_krokow = GeneratorKrokowSilnikow(luki)
     generator_krokow.generuj()
-    print(generator_krokow.kroki)
     generator_krokow.zapisz_do_pliku()
 
 
