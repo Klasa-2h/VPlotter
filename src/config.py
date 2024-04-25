@@ -14,7 +14,7 @@ motor_spacing = 1000   # odleglosc miedzy silnikami
 
 rozmiar_piksela = 2    # krawedz piksela [milimetry]
 
-krok_silnika = 0.1125    # stopni na jeden krok
+krok_silnika = 0.1125 * 8    # stopni na jeden krok
 srednica_silnika = 30    # [milimetry]
 
 # PONIZSZYCH WARTOSCI NIE ZMIENIAC

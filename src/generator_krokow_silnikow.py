@@ -18,6 +18,8 @@ class GeneratorKrokowSilnikow:
             odleglosc_miedzy_pikselami = luk.dlugosc_luku / len(luk.pixels)
             for pixcel in luk.pixels:
                 self.kroki += self.natezenie_na_kroki(pixcel)
+                self.kroki += self.kroki_do_nastepnego_piksela(odleglosc_miedzy_pikselami)
+            # Tutaj wrocic do poczatku i wydluzyc promien sznurka
 
     def natezenie_na_kroki(self, pixcel) -> list[str]:
         wysokosc_wyskoku = self.odleglosc_miedzy_lukami / 7 * pixcel
@@ -27,3 +29,7 @@ class GeneratorKrokowSilnikow:
     def zapisz_do_pliku(self):
         with open(os.path.join(resources_folder, "kroki.txt"), "w") as file:
             file.writelines(self.kroki)
+
+    def kroki_do_nastepnego_piksela(self, odleglosc_miedzy_pikselami) -> list[str]:
+        kroki = odleglosc_na_kroki(odleglosc_miedzy_pikselami)
+        return [obrot["prawy_silnik_prawo"] + "\n" for _ in range(kroki)]
