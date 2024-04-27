@@ -13,7 +13,8 @@ def main() -> None:
     generator_krokow = GeneratorKrokowSilnikow(luki)
     generator_krokow.generuj()
     generator_krokow.zapisz_do_pliku()
-
+    for luk in luki:
+        print(luk.radius)
 
 if __name__ == "__main__":
     main()
