@@ -14,12 +14,12 @@ class GeneratorKrokowSilnikow:
         self.kroki = []
 
     def generuj(self):
+
         for luk in self.luki:
             odleglosc_miedzy_pikselami = luk.dlugosc_luku / len(luk.pixels)
             for pixcel in luk.pixels:
                 self.kroki += self.natezenie_na_kroki(pixcel)
                 self.kroki += self.kroki_do_nastepnego_piksela(odleglosc_miedzy_pikselami)
-            # Tutaj wrocic do poczatku i wydluzyc promien sznurka
 
     def natezenie_na_kroki(self, pixcel) -> list[str]:
         wysokosc_wyskoku = self.odleglosc_miedzy_lukami / 7 * pixcel
