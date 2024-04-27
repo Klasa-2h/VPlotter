@@ -9,8 +9,8 @@ pikseli_pionowo: int = 100
 maksymalne_natezenie_barw: int = 7
 odleglosc_miedzy_lukami: float = 8    # [milimetry]
 
-start_x: float = 200    # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
-start_y: float = 300    # odluglosc lewego silnika od lewego-gornego rogu obrazu w pionie (wspolrzedne y) [milimetry]
+start_x: float = 350    # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
+start_y: float = 400    # odluglosc lewego silnika od lewego-gornego rogu obrazu w pionie (wspolrzedne y) [milimetry]
 
 krok_silnika: float = 0.1125 * 8    # stopni na jeden krok
 motor_spacing: float = 1000   # odleglosc miedzy silnikami

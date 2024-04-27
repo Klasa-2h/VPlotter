@@ -16,5 +16,7 @@ def main() -> None:
     for luk in luki:
         print(luk.radius)
 
+    print(len(luki))
+
 if __name__ == "__main__":
     main()
