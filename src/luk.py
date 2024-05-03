@@ -20,3 +20,8 @@ class Luk:
 
     def oblicz_dlugosc_luku(self):
         return (self.angle * math.pi * self.radius) / 180
+
+    def odwroc(self):
+        self.pixels = self.pixels[::-1]
+        self.start_x, self.start_y, self.end_x, self.end_y = self.end_x, self.end_y, self.start_x, self.start_y
+
