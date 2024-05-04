@@ -45,17 +45,15 @@ class GeneratorKrokowSilnikow:
             for pixcel in luk2.pixels:
                 self.kroki += self.natezenie_na_kroki(pixcel)
                 self.kroki += [obrot["prawy_silnik_lewo"] + "\n" for _ in range(odleglosc_na_kroki(odleglosc_miedzy_pikselami))]
-
             # Ide na poczatek kolejnego luku
             luk3 = self.luki[luk_index+2]
 
             self.kroki += [obrot["lewy_silnik_prawo"] + "\n"] * odleglosc_na_kroki(odleglosc_miedzy_lukami)
-
             dlugosc_prawego_sznurka_do_przesuniecia = (oblicz_dlugosc_prawego_sznurka(luk2.end_x, luk2.end_y) -
                                                        oblicz_dlugosc_prawego_sznurka(luk3.start_x,
                                                                                       luk3.start_y))
             if dlugosc_prawego_sznurka_do_przesuniecia < 0:
-                self.kroki += [obrot["prawy_silnik_lewo"] + "\n"] * odleglosc_na_kroki(dlugosc_prawego_sznurka_do_przesuniecia)
+                self.kroki += [obrot["prawy_silnik_lewo"] + "\n"] * odleglosc_na_kroki(-dlugosc_prawego_sznurka_do_przesuniecia)
             else:
                 self.kroki += [obrot["prawy_silnik_prawo"] + "\n"] * odleglosc_na_kroki(dlugosc_prawego_sznurka_do_przesuniecia)
 
