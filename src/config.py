@@ -12,7 +12,7 @@ odleglosc_miedzy_lukami: float = 8  # [milimetry]
 start_x: float = 350  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
 start_y: float = 400  # odluglosc lewego silnika od lewego-gornego rogu obrazu w pionie (wspolrzedne y) [milimetry]
 
-krok_silnika: float = 0.1125 * 32  # stopni na jeden krok
+krok_silnika: float = 0.1125 * 8  # stopni na jeden krok
 motor_spacing: float = 1000  # odleglosc miedzy silnikami
 srednica_silnika: float = 30  # [milimetry]
 
