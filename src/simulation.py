@@ -52,5 +52,5 @@ class Simulation:
             kroki.close()
         self.img.show()
 
-#sym = Simulation()
-#sym.stworz_symulacje()
+sym = Simulation()
+sym.stworz_symulacje()
