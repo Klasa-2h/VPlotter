@@ -3,7 +3,7 @@ import math
 from PIL import Image
 import numpy as np
 from config import *
-from src.luk import Luk
+from luk import Luk
 
 
 class ImageProcessor:
