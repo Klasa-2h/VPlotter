@@ -5,7 +5,7 @@ import math
 
 image_file_name: str = "zadanie2.png"  # plik z folderu res
 
-pikseli_pionowo: int = 100
+pikseli_pionowo: int = 100   # Ilosc poziomych lini
 maksymalne_natezenie_barw: int = 7
 odleglosc_miedzy_lukami: float = 8  # [milimetry]
 
@@ -26,8 +26,10 @@ obrot = {"lewy_silnik_prawo": "10",
 # PONIZSZYCH WARTOSCI NIE ZMIENIAC
 
 szerokosc_obrazu = motor_spacing - 2 * start_x
-
 dlugosc_sznurka_na_krok = krok_silnika / 360 * srednica_silnika * math.pi
 
 resources_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../res"))
 image_path = os.path.join(resources_folder, image_file_name)
+
+
+
