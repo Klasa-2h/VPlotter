@@ -6,6 +6,7 @@ from config import *
 from pixcel import Pixcel
 
 
+
 class ImageProcessor:
     def __init__(self) -> None:
         self.wysokosc_obrazu = None
