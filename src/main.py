@@ -10,12 +10,12 @@ def main() -> None:
     img_processor.zmiana_rozmiaru()
     img_processor.mono_image()
     img_processor.process_intensity_scale_and_reverse()
-    obraz = img_processor.get_image_with_pixcel_objects()
+    obraz = img_processor.get_image_with_pixcel_objects(start_x,start_y)
     generator_krokow = GeneratorKrokowSilnikow(obraz)
     generator_krokow.generuj()
     generator_krokow.zapisz_do_pliku()
     sym = Simulation()
-    # sym.stworz_symulacje()
+    sym.stworz_symulacje()
 
 
 if __name__ == "__main__":

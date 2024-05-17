@@ -27,9 +27,10 @@ class ImageProcessor:
         self.szerokosc_piksele = nowa_szerokosc
         self.wysokosc_piksele = zadana_wysokosc
         self.image = Image.fromarray(np.array(self.image)).resize((nowa_szerokosc, zadana_wysokosc), 4)
-
+    
         self.rozmiar_piksela = szerokosc_obrazu / self.szerokosc_piksele
         self.wysokosc_obrazu = szerokosc_obrazu/proporcja
+
 
     def mono_image(self) -> None:
         self.image = self.image.convert('L')
@@ -45,10 +46,10 @@ class ImageProcessor:
                 piksele[y, x] = gorny_limit - nowa_jasnosc
         self.image = Image.fromarray(piksele)
 
-    def get_image_with_pixcel_objects(self):
+    def get_image_with_pixcel_objects(self,start_x,start_y):
         pixcel_image = []
         for y in range(len(np.array(self.image))):
             pixcel_image.append([])
             for x in range(len(np.array(self.image)[0])):
-                pixcel_image[-1].append(Pixcel(x, y, np.array(self.image)[y][x]))
+                pixcel_image[-1].append(Pixcel(x, y, np.array(self.image)[y][x], self.rozmiar_piksela,start_x,start_y))
         return pixcel_image
