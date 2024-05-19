@@ -1,5 +1,7 @@
+from config import *
+
 class Pixcel:
-    def __init__(self, x, y, natezenie, rozmiar_piksela, start_x, start_y):
+    def __init__(self, x, y, natezenie, rozmiar_piksela):
         self.x = x
         self.y = y
         self.natezenie = natezenie
@@ -14,3 +16,12 @@ class Pixcel:
 
     def get_ymm(self):
         return self.y * self.rozmiar_piksela + self.start_y
+
+
+
+
+
+
+
+
+
