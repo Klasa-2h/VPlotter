@@ -46,7 +46,7 @@ class ImageProcessor:
                 piksele[y, x] = gorny_limit - nowa_jasnosc
         self.image = Image.fromarray(piksele)
 
-    def get_image_with_pixcel_objects(self,start_x,start_y):
+    def get_image_with_pixcel_objects(self):
         pixcel_image = []
         for y in range(len(np.array(self.image))):
             pixcel_image.append([])

@@ -1,5 +1,5 @@
 from config import *
-from luk import Luk
+from pixcel import Pixcel
 import os
 
 
@@ -12,12 +12,37 @@ def oblicz_dlugosc_prawego_sznurka(x, y):
 
 
 class GeneratorKrokowSilnikow:
-    def __init__(self, obraz):
+    def __init__(self, obraz: list[list[Pixcel]]):
         self.obraz = obraz
         self.kroki = []
 
     def generuj(self):
-        pass
+        for row in self.obraz[:-1:]:
+            for pixcel in row[:-1:]:
+                # Tutaj robimy ten dzyndzel od natezenia
+                # A potem idziemy do nastepnego piksela
+                lewy_do_rozwiniecia = abs(math.sqrt(pixcel.xmm**2+pixcel.ymm**2)
+                                          - math.sqrt(row[pixcel.x+1].xmm**2 + row[pixcel.x+1].ymm**2))
+                prawy_do_zwiniecia = abs(math.sqrt((motor_spacing-pixcel.xmm)**2 + pixcel.ymm**2)
+                                         - math.sqrt((motor_spacing - row[pixcel.x+1].xmm)**2 + row[pixcel.x+1].ymm**2))
+                self.kroki += ["10\n" for _ in range(odleglosc_na_kroki(lewy_do_rozwiniecia))]
+                self.kroki += ["00\n" for _ in range(odleglosc_na_kroki(prawy_do_zwiniecia))]
+            print(pixcel.y, pixcel.x, pixcel.xmm, pixcel.ymm, len(row))
+
+            self.kroki.append("1\n")
+
+            p1 = row[-1]
+            p2 = self.obraz[row[0].y+1][1]
+
+            lewy_do_zwiniecia = math.sqrt(p1.xmm**2 + p1.ymm**2) - math.sqrt(p2.xmm**2 + p2.ymm**2)
+            prawy_do_rozwiniecia = abs(math.sqrt((motor_spacing - p1.xmm)**2 + p1.ymm**2)
+                                       - math.sqrt((motor_spacing - p2.xmm)**2 + p2.ymm**2))
+
+            self.kroki += ["11\n" for _ in range(odleglosc_na_kroki(lewy_do_zwiniecia))]
+            self.kroki += ["01\n" for _ in range(odleglosc_na_kroki(prawy_do_rozwiniecia))]
+
+            self.kroki.append("0\n")
+
 
     def zapisz_do_pliku(self):
         with open(os.path.join(resources_folder, "kroki.txt"), "w") as file:
