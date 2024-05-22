@@ -36,19 +36,22 @@ class Simulation:
         with open(os.path.join(resources_folder, "kroki.txt"), "r") as kroki:
             lines = kroki.readlines()
             for line in lines:
-                match line.strip():
-                    case "10":
-                        self.rysuj(self.dlugosc_sznurka_na_krok, 0)
-                    case "11":
-                        self.rysuj(-self.dlugosc_sznurka_na_krok, 0)
-                    case "01":
-                        self.rysuj(0, self.dlugosc_sznurka_na_krok)
-                    case "00":
-                        self.rysuj(0, -self.dlugosc_sznurka_na_krok)
-                    case "1":
-                        self.marker = False
-                    case "0":
-                        self.marker = True
+                try:
+                    match line.strip():
+                        case "10":
+                            self.rysuj(self.dlugosc_sznurka_na_krok, 0)
+                        case "11":
+                            self.rysuj(-self.dlugosc_sznurka_na_krok, 0)
+                        case "01":
+                            self.rysuj(0, self.dlugosc_sznurka_na_krok)
+                        case "00":
+                            self.rysuj(0, -self.dlugosc_sznurka_na_krok)
+                        case "1":
+                            self.marker = False
+                        case "0":
+                            self.marker = True
+                except Exception:
+                    pass
         self.img.show()
 
 
