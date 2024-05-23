@@ -7,7 +7,8 @@ image_file_name: str = "zadanie2.png"  # plik z folderu res
 
 pikseli_pionowo: int = 49   # Ilosc poziomych lini
 maksymalne_natezenie_barw: int = 7
-odleglosc_miedzy_lukami: float = 8  # [milimetry]
+odleglosc_miedzy_lukami: float = 8  # [milimetry]   NA
+max_dlugosc_dzyndzli: float = 5     # [milimetry]
 
 start_x: float = 350  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
 start_y: float = 450  # odluglosc lewego silnika od lewego-gornego rogu obrazu w pionie (wspolrzedne y) [milimetry]
