@@ -20,6 +20,15 @@ class GeneratorKrokowSilnikow:
         for row in self.obraz[:-1:]:
             for pixcel in row[:-1:]:
                 # Tutaj robimy ten dzyndzel od natezenia
+                dlugosc_dzyndzla = max_dlugosc_dzyndzli * (pixcel.natezenie/maksymalne_natezenie_barw)
+                ilosc_krokow_dzyndzla = odleglosc_na_kroki(dlugosc_dzyndzla)
+
+                self.kroki += ["11\n" for _ in range(ilosc_krokow_dzyndzla)]
+                self.kroki += ["10\n" for _ in range(ilosc_krokow_dzyndzla)]
+
+                # to nizej to na dodatkowy kontrast
+                self.kroki += ["00\n" for _ in range(ilosc_krokow_dzyndzla)]
+                self.kroki += ["01\n" for _ in range(ilosc_krokow_dzyndzla)]
                 # A potem idziemy do nastepnego piksela
                 lewy_do_rozwiniecia = abs(math.sqrt(pixcel.xmm**2+pixcel.ymm**2)
                                           - math.sqrt(row[pixcel.x+1].xmm**2 + row[pixcel.x+1].ymm**2))
@@ -27,7 +36,6 @@ class GeneratorKrokowSilnikow:
                                          - math.sqrt((motor_spacing - row[pixcel.x+1].xmm)**2 + row[pixcel.x+1].ymm**2))
                 self.kroki += ["10\n" for _ in range(odleglosc_na_kroki(lewy_do_rozwiniecia))]
                 self.kroki += ["00\n" for _ in range(odleglosc_na_kroki(prawy_do_zwiniecia))]
-            print(pixcel.y, pixcel.x, pixcel.xmm, pixcel.ymm, len(row))
 
             self.kroki.append("1\n")
 
