@@ -17,39 +17,70 @@ class GeneratorKrokowSilnikow:
         self.kroki = []
 
     def generuj(self):
+        marker = 'lewo'
         for row in self.obraz[:-1:]:
-            for pixcel in row[:-1:]:
-                # Tutaj robimy ten dzyndzel od natezenia
-                dlugosc_dzyndzla = max_dlugosc_dzyndzli * (pixcel.natezenie/maksymalne_natezenie_barw)
-                ilosc_krokow_dzyndzla = odleglosc_na_kroki(dlugosc_dzyndzla)
+            if marker == 'lewo':
+                for pixcel in row[:-1:]:
+                    # Tutaj robimy ten dzyndzel od natezenia
+                    dlugosc_dzyndzla = max_dlugosc_dzyndzli * (pixcel.natezenie/maksymalne_natezenie_barw)
+                    ilosc_krokow_dzyndzla = odleglosc_na_kroki(dlugosc_dzyndzla)
 
-                self.kroki += ["11\n" for _ in range(ilosc_krokow_dzyndzla)]
-                self.kroki += ["10\n" for _ in range(ilosc_krokow_dzyndzla)]
+                    self.kroki += ["11\n" for _ in range(ilosc_krokow_dzyndzla)]
+                    self.kroki += ["10\n" for _ in range(ilosc_krokow_dzyndzla)]
 
-                # to nizej to na dodatkowy kontrast
-                self.kroki += ["00\n" for _ in range(ilosc_krokow_dzyndzla)]
-                self.kroki += ["01\n" for _ in range(ilosc_krokow_dzyndzla)]
-                # A potem idziemy do nastepnego piksela
-                lewy_do_rozwiniecia = abs(math.sqrt(pixcel.xmm**2+pixcel.ymm**2)
-                                          - math.sqrt(row[pixcel.x+1].xmm**2 + row[pixcel.x+1].ymm**2))
-                prawy_do_zwiniecia = abs(math.sqrt((motor_spacing-pixcel.xmm)**2 + pixcel.ymm**2)
-                                         - math.sqrt((motor_spacing - row[pixcel.x+1].xmm)**2 + row[pixcel.x+1].ymm**2))
-                self.kroki += ["10\n" for _ in range(odleglosc_na_kroki(lewy_do_rozwiniecia))]
-                self.kroki += ["00\n" for _ in range(odleglosc_na_kroki(prawy_do_zwiniecia))]
+                    # to nizej to na dodatkowy kontrast
+                    self.kroki += ["00\n" for _ in range(ilosc_krokow_dzyndzla)]
+                    self.kroki += ["01\n" for _ in range(ilosc_krokow_dzyndzla)]
+                    # A potem idziemy do nastepnego piksela
+                    lewy_do_rozwiniecia = abs(math.sqrt(pixcel.xmm**2+pixcel.ymm**2)
+                                              - math.sqrt(row[pixcel.x+1].xmm**2 + row[pixcel.x+1].ymm**2))
+                    prawy_do_zwiniecia = abs(math.sqrt((motor_spacing-pixcel.xmm)**2 + pixcel.ymm**2)
+                                             - math.sqrt((motor_spacing - row[pixcel.x+1].xmm)**2 + row[pixcel.x+1].ymm**2))
+                    self.kroki += ["10\n" for _ in range(odleglosc_na_kroki(lewy_do_rozwiniecia))]
+                    self.kroki += ["00\n" for _ in range(odleglosc_na_kroki(prawy_do_zwiniecia))]
+                marker = 'prawo'
+            else:
+                for pixcel in row[-1:1:-1]:
+                    # Tutaj robimy ten dzyndzel od natezenia
+                    dlugosc_dzyndzla = max_dlugosc_dzyndzli * (pixcel.natezenie/maksymalne_natezenie_barw)
+                    ilosc_krokow_dzyndzla = odleglosc_na_kroki(dlugosc_dzyndzla)
 
-            self.kroki.append("1\n")
+                    self.kroki += ["00\n" for _ in range(ilosc_krokow_dzyndzla)]
+                    self.kroki += ["01\n" for _ in range(ilosc_krokow_dzyndzla)]
 
-            p1 = row[-1]
-            p2 = self.obraz[row[0].y+1][1]
+                    # to nizej to na dodatkowy kontrast
+                    self.kroki += ["11\n" for _ in range(ilosc_krokow_dzyndzla)]
+                    self.kroki += ["10\n" for _ in range(ilosc_krokow_dzyndzla)]
+                    # A potem idziemy do nastepnego piksela
+                    prawy_do_rozwiniecia = abs(math.sqrt(pixcel.xmm**2+pixcel.ymm**2)
+                                              - math.sqrt(row[pixcel.x-1].xmm**2 + row[pixcel.x-1].ymm**2))
+                    lewy_do_zwiniecia = abs(math.sqrt((motor_spacing-pixcel.xmm)**2 + pixcel.ymm**2)
+                                             - math.sqrt((motor_spacing - row[pixcel.x-1].xmm)**2 + row[pixcel.x-1].ymm**2))
+                    self.kroki += ["01\n" for _ in range(odleglosc_na_kroki(prawy_do_rozwiniecia))]
+                    self.kroki += ["11\n" for _ in range(odleglosc_na_kroki(lewy_do_zwiniecia))]               
+                marker ='lewo'
+                
+            
+            if marker == 'prawo':
+                p1 = row[-1]
+                p2 = self.obraz[row[0].y + 1][-1]
+            else:
+                p1 = row[0]
+                p2 = self.obraz[row[0].y + 1][0]
 
-            lewy_do_zwiniecia = math.sqrt(p1.xmm**2 + p1.ymm**2) - math.sqrt(p2.xmm**2 + p2.ymm**2)
-            prawy_do_rozwiniecia = abs(math.sqrt((motor_spacing - p1.xmm)**2 + p1.ymm**2)
-                                       - math.sqrt((motor_spacing - p2.xmm)**2 + p2.ymm**2))
+            lewy_do_zwiniecia = abs(math.sqrt(p1.xmm ** 2 + p1.ymm ** 2) - math.sqrt(p2.xmm ** 2 + p2.ymm ** 2))
+            prawy_do_rozwiniecia = abs(math.sqrt((motor_spacing - p1.xmm) ** 2 + p1.ymm ** 2) -
+                                       math.sqrt((motor_spacing - p2.xmm) ** 2 + p2.ymm ** 2))
 
-            self.kroki += ["11\n" for _ in range(odleglosc_na_kroki(lewy_do_zwiniecia))]
-            self.kroki += ["01\n" for _ in range(odleglosc_na_kroki(prawy_do_rozwiniecia))]
+            if marker == 'prawo':
+                self.kroki += ["11\n"] * odleglosc_na_kroki(lewy_do_zwiniecia)
+                self.kroki += ["01\n"] * odleglosc_na_kroki(prawy_do_rozwiniecia)
+            else:
+                self.kroki += ["00\n"] * odleglosc_na_kroki(lewy_do_zwiniecia)
+                self.kroki += ["10\n"] * odleglosc_na_kroki(prawy_do_rozwiniecia)
 
-            self.kroki.append("0\n")
+        self.kroki.append("0\n")
+
 
 
     def zapisz_do_pliku(self):
