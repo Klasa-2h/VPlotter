@@ -93,6 +93,6 @@ class GeneratorKrokowSilnikow:
         return int(xmm), int(ymm)
 
     def zapisz_do_pliku(self):
-        with open(os.path.join(resources_folder, "kroki.txt"), "w") as file:
+        with open(os.path.join(resources_folder, "Dane.txt"), "w") as file:
             file.writelines(self.kroki)
     

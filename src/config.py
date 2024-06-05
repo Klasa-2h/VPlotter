@@ -5,13 +5,12 @@ import math
 
 image_file_name: str = "zadanie2.png"  # plik z folderu res
 
-pikseli_pionowo: int = 200   # Ilosc poziomych lini
+pikseli_pionowo: int = 50   # Ilosc poziomych lini
 maksymalne_natezenie_barw: int = 63
-odleglosc_miedzy_lukami: float = 8  # [milimetry]   NA
-max_dlugosc_dzyndzli: float = 5     # [milimetry]
-ilosc_dzyndzli_poziomo: int = 250
+max_dlugosc_dzyndzli: float = 4     # [milimetry]
+ilosc_dzyndzli_poziomo: int = 75
 
-start_x: float = 350  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
+start_x: float = 400  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
 start_y: float = 300  # odluglosc lewego silnika od lewego-gornego rogu obrazu w pionie (wspolrzedne y) [milimetry]
 
 krok_silnika: float = 0.1125 * 4  # stopni na jeden krok
