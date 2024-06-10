@@ -4,7 +4,7 @@ import os
 
 
 def odleglosc_na_kroki(odleglosc: float) -> int:
-    return int(odleglosc / dlugosc_sznurka_na_krok)
+    return round(odleglosc / dlugosc_sznurka_na_krok)
 
 
 def oblicz_dlugosc_prawego_sznurka(x, y):
@@ -13,6 +13,18 @@ def oblicz_dlugosc_prawego_sznurka(x, y):
 
 def oblicz_dlugosc_lewego_sznurka(x, y):
     return math.sqrt(x**2 + y**2)
+
+
+def polacz_kroki(kroki_prawy, kroki_lewy, rodzaj_prawego, rodzaj_lewego):
+    kroki = []
+    while kroki_lewy > 0 or kroki_prawy > 0:
+        if kroki_lewy > 0:
+            kroki.append(f"{rodzaj_lewego}\n")
+            kroki_lewy -= 1
+        if kroki_prawy > 0:
+            kroki.append(f"{rodzaj_prawego}\n")
+            kroki_prawy -= 1
+    return kroki
 
 
 class GeneratorKrokowSilnikow:
@@ -38,18 +50,11 @@ class GeneratorKrokowSilnikow:
                 lewy_do_rozwiniecia = -(oblicz_dlugosc_lewego_sznurka(xmm, ymm)
                                         - oblicz_dlugosc_lewego_sznurka(xmm + odleglosc_miedzy_dzyndzlami, ymm))
                 
-                stosunek_p_do_l = abs(prawy_do_zwiniecia / lewy_do_rozwiniecia)
                 kroki_lewy = odleglosc_na_kroki(lewy_do_rozwiniecia)
                 kroki_prawy = odleglosc_na_kroki(prawy_do_zwiniecia)
                 
                 # Synchronizacja kroków
-                while kroki_lewy > 0 or kroki_prawy > 0:
-                    if kroki_lewy > 0:
-                        self.kroki.append("10\n")
-                        kroki_lewy -= 1
-                    if kroki_prawy > 0:
-                        self.kroki.append("00\n")
-                        kroki_prawy -= 1
+                self.kroki += polacz_kroki(kroki_prawy, kroki_lewy, "00", "10")
 
             # Przejście do następnej linii w dół
             ymm += self.rozmiar_piksela
@@ -61,14 +66,8 @@ class GeneratorKrokowSilnikow:
             
             kroki_lewy = odleglosc_na_kroki(lewy_do_rozwiniecia)
             kroki_prawy = odleglosc_na_kroki(prawy_do_rozwiniecia)
-            
-            while kroki_lewy > 0 or kroki_prawy > 0:
-                if kroki_lewy > 0:
-                    self.kroki.append("10\n")
-                    kroki_lewy -= 1
-                if kroki_prawy > 0:
-                    self.kroki.append("01\n")
-                    kroki_prawy -= 1
+
+            self.kroki += polacz_kroki(kroki_prawy, kroki_lewy, "01", "10")
 
             for x in range(ilosc_dzyndzli_poziomo - 1, -1, -1):
                 # W tej pętli idziemy w lewo
@@ -86,14 +85,8 @@ class GeneratorKrokowSilnikow:
                 
                 kroki_lewy = odleglosc_na_kroki(lewy_do_zwiniecia)
                 kroki_prawy = odleglosc_na_kroki(prawy_do_rozwiniecia)
-                
-                while kroki_lewy > 0 or kroki_prawy > 0:
-                    if kroki_lewy > 0:
-                        self.kroki.append("11\n")
-                        kroki_lewy -= 1
-                    if kroki_prawy > 0:
-                        self.kroki.append("01\n")
-                        kroki_prawy -= 1
+
+                self.kroki += polacz_kroki(kroki_prawy, kroki_lewy, "01", "11")
 
             ymm += self.rozmiar_piksela
 
@@ -104,15 +97,8 @@ class GeneratorKrokowSilnikow:
             
             kroki_lewy = odleglosc_na_kroki(lewy_do_rozwiniecia)
             kroki_prawy = odleglosc_na_kroki(prawy_do_rozwiniecia)
-            
-            while kroki_lewy > 0 or kroki_prawy > 0:
-                if kroki_lewy > 0:
-                    self.kroki.append("10\n")
-                    kroki_lewy -= 1
-                if kroki_prawy > 0:
-                    self.kroki.append("01\n")
-                    kroki_prawy -= 1
 
+            self.kroki += polacz_kroki(kroki_prawy, kroki_lewy, "01", "10")
 
     def znajdz_piksel(self, xmm, ymm):
         ymm -= start_y

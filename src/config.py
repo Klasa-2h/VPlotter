@@ -6,14 +6,14 @@ import math
 image_file_name: str = "zadanie2.png"  # plik z folderu res
 
 pikseli_pionowo: int = 50   # Ilosc poziomych lini
-maksymalne_natezenie_barw: int = 63
-max_dlugosc_dzyndzli: float = 4     # [milimetry]
-ilosc_dzyndzli_poziomo: int = 75
+maksymalne_natezenie_barw: int = 7
+max_dlugosc_dzyndzli: float = 2     # [milimetry]
+ilosc_dzyndzli_poziomo: int = 150
 
-start_x: float = 400  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
+start_x: float = 450  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
 start_y: float = 300  # odluglosc lewego silnika od lewego-gornego rogu obrazu w pionie (wspolrzedne y) [milimetry]
 
-krok_silnika: float = 0.1125 * 4  # stopni na jeden krok
+krok_silnika: float = 0.1125 * 1  # stopni na jeden krok
 motor_spacing: float = 1000  # odleglosc miedzy silnikami
 srednica_silnika: float = 20  # [milimetry]
 
