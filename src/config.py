@@ -3,7 +3,7 @@ import math
 
 # ustawienia programu
 
-image_file_name: str = "kk.jpg"  # plik z folderu res
+image_file_name: str = "zadanie2.png"  # plik z folderu res
 
 pikseli_pionowo: int = 200    # Ilosc poziomych lini
 maksymalne_natezenie_barw: int = 63
