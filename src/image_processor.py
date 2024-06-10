@@ -53,3 +53,4 @@ class ImageProcessor:
             for x in range(len(np.array(self.image)[0])):
                 pixcel_image[-1].append(Pixcel(x, y, np.array(self.image)[y][x], self.rozmiar_piksela))
         return pixcel_image
+
