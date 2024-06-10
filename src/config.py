@@ -5,7 +5,7 @@ import math
 
 image_file_name: str = "zadanie2.png"  # plik z folderu res
 
-pikseli_pionowo: int = 200   # Ilosc poziomych lini
+pikseli_pionowo: int = 200    # Ilosc poziomych lini
 maksymalne_natezenie_barw: int = 63
 odleglosc_miedzy_lukami: float = 8  # [milimetry]   NA
 max_dlugosc_dzyndzli: float = 5     # [milimetry]
