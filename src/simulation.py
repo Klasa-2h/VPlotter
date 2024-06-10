@@ -5,7 +5,7 @@ import os
 
 class Simulation:
     def __init__(self) -> None:
-        self.mm_na_px = 3.77957517575
+        self.mm_na_px = 3.9
         self.start_x = start_x*self.mm_na_px
         self.start_y = start_y*self.mm_na_px
         self.motor_spacing = motor_spacing*self.mm_na_px
