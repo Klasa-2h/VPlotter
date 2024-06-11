@@ -3,17 +3,16 @@ import math
 
 # ustawienia programu
 
-image_file_name: str = "zadanie2.png"  # plik z folderu res
+image_file_name: str = "p1.jpg"  # plik z folderu res
 
-pikseli_pionowo: int = 50   # Ilosc poziomych lini
+pikseli_pionowo: int = 50   # Ilosc poziomych lini;   >= 2
 maksymalne_natezenie_barw: int = 7
-max_dlugosc_dzyndzli: float = 2     # [milimetry]
-ilosc_dzyndzli_poziomo: int = 150
+ilosc_dzyndzli_poziomo: int = 175
 
-start_x: float = 450  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
+start_x: float = 420  # odluglosc lewego silnika od lewego-gornego rogu obrazu w poziomie (wspolrzedne x) [milimetry]
 start_y: float = 300  # odluglosc lewego silnika od lewego-gornego rogu obrazu w pionie (wspolrzedne y) [milimetry]
 
-krok_silnika: float = 0.1125 * 1  # stopni na jeden krok
+krok_silnika: float = 0.1125 * 2  # stopni na jeden krok
 motor_spacing: float = 1000  # odleglosc miedzy silnikami
 srednica_silnika: float = 20  # [milimetry]
 
@@ -24,6 +23,8 @@ obrot = {"lewy_silnik_prawo": "10",
          "gora": "1",
          "dol": "0"}
 
+grubosc_lini_symulacji = 1
+
 # PONIZSZYCH WARTOSCI NIE ZMIENIAC
 
 szerokosc_obrazu = motor_spacing - 2 * start_x
@@ -33,4 +34,6 @@ resources_folder = os.path.abspath(os.path.join(os.path.dirname(__file__), "../r
 image_path = os.path.join(resources_folder, image_file_name)
 
 odleglosc_miedzy_dzyndzlami = szerokosc_obrazu / ilosc_dzyndzli_poziomo
+kompresja_w_pionie = .95
+
 
