@@ -41,9 +41,11 @@ class GeneratorKrokowSilnikow:
                 xmm = start_x + x * odleglosc_miedzy_dzyndzlami
                 i, j = self.znajdz_piksel(xmm, ymm)
                 natezenie = self.obraz[j][i].natezenie
-                dlugosc_dzyndzla = natezenie / maksymalne_natezenie_barw * max_dlugosc_dzyndzli
+                dlugosc_dzyndzla = (natezenie / maksymalne_natezenie_barw * self.rozmiar_piksela)/2
                 self.kroki += (["11\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
                 self.kroki += (["10\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
+                self.kroki += (["01\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
+                self.kroki += (["00\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
 
                 prawy_do_zwiniecia = (oblicz_dlugosc_prawego_sznurka(xmm, ymm)
                                       - oblicz_dlugosc_prawego_sznurka(xmm + odleglosc_miedzy_dzyndzlami, ymm))
@@ -59,9 +61,9 @@ class GeneratorKrokowSilnikow:
             # Przejście do następnej linii w dół
             ymm += self.rozmiar_piksela
 
-            prawy_do_rozwiniecia = -(oblicz_dlugosc_prawego_sznurka(xmm, ymm - self.rozmiar_piksela)
+            prawy_do_rozwiniecia = -(oblicz_dlugosc_prawego_sznurka(xmm, ymm - self.rozmiar_piksela * kompresja_w_pionie)
                                     - oblicz_dlugosc_prawego_sznurka(xmm, ymm))
-            lewy_do_rozwiniecia = -(oblicz_dlugosc_lewego_sznurka(xmm, ymm - self.rozmiar_piksela)
+            lewy_do_rozwiniecia = -(oblicz_dlugosc_lewego_sznurka(xmm, ymm - self.rozmiar_piksela * kompresja_w_pionie)
                                    - oblicz_dlugosc_lewego_sznurka(xmm, ymm))
             
             kroki_lewy = odleglosc_na_kroki(lewy_do_rozwiniecia)
@@ -74,9 +76,13 @@ class GeneratorKrokowSilnikow:
                 xmm = start_x + x * odleglosc_miedzy_dzyndzlami
                 i, j = self.znajdz_piksel(xmm, ymm)
                 natezenie = self.obraz[j][i].natezenie
-                dlugosc_dzyndzla = natezenie / maksymalne_natezenie_barw * max_dlugosc_dzyndzli
+                dlugosc_dzyndzla = natezenie / maksymalne_natezenie_barw * self.rozmiar_piksela / 2
+
+                # rysowanie dzyndzla od ciemnosci
                 self.kroki += (["11\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
                 self.kroki += (["10\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
+                self.kroki += (["01\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
+                self.kroki += (["00\n" for _ in range(odleglosc_na_kroki(dlugosc_dzyndzla))])
 
                 prawy_do_rozwiniecia = -(oblicz_dlugosc_prawego_sznurka(xmm, ymm)
                                          - oblicz_dlugosc_prawego_sznurka(xmm - odleglosc_miedzy_dzyndzlami, ymm))
@@ -90,9 +96,9 @@ class GeneratorKrokowSilnikow:
 
             ymm += self.rozmiar_piksela
 
-            prawy_do_rozwiniecia = (oblicz_dlugosc_prawego_sznurka(xmm, ymm + self.rozmiar_piksela)
+            prawy_do_rozwiniecia = (oblicz_dlugosc_prawego_sznurka(xmm, ymm + self.rozmiar_piksela * kompresja_w_pionie)
                                     - oblicz_dlugosc_prawego_sznurka(xmm, ymm))
-            lewy_do_rozwiniecia = (oblicz_dlugosc_lewego_sznurka(xmm, ymm + self.rozmiar_piksela)
+            lewy_do_rozwiniecia = (oblicz_dlugosc_lewego_sznurka(xmm, ymm + self.rozmiar_piksela * kompresja_w_pionie)
                                    - oblicz_dlugosc_lewego_sznurka(xmm, ymm))
             
             kroki_lewy = odleglosc_na_kroki(lewy_do_rozwiniecia)

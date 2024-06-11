@@ -29,7 +29,7 @@ class Simulation:
         end_x = self.wart_x(self.l_str_length + zmiana_lewego_sznurka, self.r_str_length + zmiana_prawego_sznurka)
         end_y = self.wart_y(self.l_str_length + zmiana_lewego_sznurka, self.r_str_length + zmiana_prawego_sznurka)
         if self.marker:
-            self.symulacja.line([(self.start_x, self.start_y), (end_x, end_y)], fill = "black", width = 1)
+            self.symulacja.line([(self.start_x, self.start_y), (end_x, end_y)], fill = "black", width = grubosc_lini_symulacji)
         self.start_x, self.start_y, self.l_str_length, self.r_str_length = end_x, end_y, self.l_str_length+zmiana_lewego_sznurka, self.r_str_length+zmiana_prawego_sznurka
         
     def stworz_symulacje(self):
