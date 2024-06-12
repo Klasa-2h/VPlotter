@@ -3,9 +3,9 @@ import math
 
 # ustawienia programu
 
-image_file_name: str = "p1.jpg"  # plik z folderu res
+image_file_name: str = "zadanie2.png"  # plik z folderu res
 
-pikseli_pionowo: int = 50   # Ilosc poziomych lini;   >= 2
+pikseli_pionowo: int = 100    # Ilosc poziomych lini;   >= 2
 maksymalne_natezenie_barw: int = 7
 ilosc_dzyndzli_poziomo: int = 175
 
