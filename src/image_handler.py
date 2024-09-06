@@ -6,7 +6,7 @@ import global_data
 
 class ImageHandler:
 
-    def __int__(self):
+    def __init__(self):
         self.img = None
         self.lines = []
 
@@ -30,11 +30,11 @@ class ImageHandler:
                     pixcels[y][x] = config.color_range - new_brightness
             self.img = Image.fromarray(pixcels)
             print(f"Grayscale brightness range reduced to {config.color_range} shades of gray and inverted")
-            self.img.show()
 
     def initialize_image_objects(self):
-        # zapisujemy liste Line'ow pod zmienna self.image
-        pass
+        for line in np.array(self.img):
+            self.lines.append(Line(line))
+        print("Image converted to an array of Line() objects")
 
     def generate_steps(self):
         for i in range(len(self.lines)):
@@ -45,7 +45,7 @@ class ImageHandler:
 
 
 class Line:
-    def __int__(self, pixcels: list[int]):
+    def __init__(self, pixcels: list[int]):
         self.pixcels = pixcels  # do tego obiektu przekazuj linie z img_handler.img
 
     def generate_steps(self):
