@@ -13,7 +13,9 @@ class ImageHandler:
     def read_image(self):
         self.img = Image.open(config.image_path)
         global_data.image_height_pixcels, global_data.image_width_pixcels, _ = np.array(self.img).shape
-        print("Image read with size of: ", global_data.image_width_pixcels, global_data.image_height_pixcels)
+        global_data.image_ratio = round(global_data.image_width_pixcels / global_data.image_height_pixcels, 3)
+        global_data.final_image_height = round(config.final_image_width / global_data.image_ratio)
+        print("Image read with size of: ", global_data.image_width_pixcels, global_data.image_height_pixcels, "Ratio: ", global_data.image_ratio, "Hight in milimeters: ", global_data.final_image_height)
 
 
 
