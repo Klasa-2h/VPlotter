@@ -1,7 +1,12 @@
+from image_handler import ImageHandler
+from steps_generator import StepsGenerator
 
 
 def main() -> None:
-    return
+    img_handler = ImageHandler()
+    img_handler.read_image()
+    img_handler.process_image()
+
 
 
 if __name__=="__main__":
