@@ -1,5 +1,6 @@
 
 image_path = "C:/Users/murek/Projects/VPlotter/res/zadanie2.png"
+steps_file_path = "C:/Users/murek/Projects/VPlotter/res/DANE.txt"
 
 color_range = 100
 

@@ -1,4 +1,5 @@
-current_marker_position = None
+current_marker_position_x = None
+current_marker_position_y = None
 
 image_width_pixcels = None
 image_height_pixcels = None

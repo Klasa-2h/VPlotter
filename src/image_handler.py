@@ -1,5 +1,6 @@
 import numpy as np
 from PIL import Image
+from steps_generator import move
 import config
 import global_data
 
@@ -39,16 +40,16 @@ class ImageHandler:
         print("Image converted to an array of Line() objects")
 
     def generate_steps(self):
-        for i in range(len(self.lines)):
+        for i in range(config.resolution_vertically):
             self.lines[i].generate_steps()
-            if i != len(self.lines) - 1:
-                # przejdz do nastepnej lini
-                pass
+            if i != global_data.image_height_pixcels - 1:
+                move(global_data.current_marker_position_x, global_data.current_marker_position_y + global_data.final_image_height/config.resolution_vertically)
+
 
 
 class Line:
     def __init__(self, pixcels: list[int]):
-        self.pixcels = pixcels  # do tego obiektu przekazuj linie z img_handler.img
+        self.pixcels = pixcels  # jako argument tego obiektu przekazuj linie z img_handler.img
 
     def generate_steps(self):
         for i in range(config.resolution_horizontally):
