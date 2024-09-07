@@ -1,9 +1,13 @@
+import config
 
-class StepsGenerator:
-    def __int__(self):
-        self.steps = []
 
-    def move(self, new_x, new_y):
-        # ta metoda generuje kroki potrzebne do przesuniecia pisaka z caurrent_marker_position na nowe wspolrzedne
+def move(end_x, end_y):
+    steps = []
+    # tu generujemy liste krokow potrzebnych do wykonania ruchu
+    # tu zapisujemy kroki do pliku
 
-        pass
+
+def save_steps_to_file(steps) -> None:
+    with open(config.steps_file_path, "a") as file:
+        file.writelines(steps)
+
