@@ -1,34 +1,57 @@
+import numpy as np
+from PIL import Image
+import config
+import global_data
+
 
 class ImageHandler:
-    def __int__(self):
-        self.image = []
+
+    def __init__(self):
+        self.img = None
+        self.lines = []
 
     def read_image(self):
-        #wczytujemy z pliku
-        pass
+        self.img = Image.open(config.image_path)
+        global_data.image_height_pixcels, global_data.image_width_pixcels, _ = np.array(self.img).shape
+        global_data.image_ratio = round(global_data.image_width_pixcels / global_data.image_height_pixcels, 3)
+        global_data.final_image_height = round(config.final_image_width / global_data.image_ratio)
+        print("Image read with size of: ", global_data.image_width_pixcels, global_data.image_height_pixcels, "Ratio: ", global_data.image_ratio, "Hight in milimeters: ", global_data.final_image_height)
+
+
 
     def process_image(self):
         # czarnobialy obraz + redukcja skali szarosci
-        pass
+        if self.img is not None:
+            self.img = self.img.convert("L")
+            print("Image converted to grayscale")
+            pixcels = np.array(self.img)
+            for y in range(global_data.image_height_pixcels):
+                for x in range(global_data.image_width_pixcels):
+                    brightness = pixcels[y][x]
+                    new_brightness = int(brightness * config.color_range // 255)
+                    pixcels[y][x] = config.color_range - new_brightness
+            self.img = Image.fromarray(pixcels)
+            print(f"Grayscale brightness range reduced to {config.color_range} shades of gray and inverted")
 
     def initialize_image_objects(self):
-        # zapisujemy liste Line'ow pod zmienna self.image
-        pass
+        for line in np.array(self.img):
+            self.lines.append(Line(line))
+        print("Image converted to an array of Line() objects")
 
     def generate_steps(self):
-        for i in range(len(self.image)):
-            self.image[i].generate_steps()
-            if i != len(self.image) - 1:
+        for i in range(len(self.lines)):
+            self.lines[i].generate_steps()
+            if i != len(self.lines) - 1:
                 # przejdz do nastepnej lini
                 pass
 
 
 class Line:
-    def __int__(self, pixcels: list[int]):
-        self.pixcels = pixcels
+    def __init__(self, pixcels: list[int]):
+        self.pixcels = pixcels  # do tego obiektu przekazuj linie z img_handler.img
 
     def generate_steps(self):
-        for pixcel in self.pixcels:
+        for i in range(config.resolution_horizontally):
             # rysujemy piksel i idziemy dalej
             pass
 
