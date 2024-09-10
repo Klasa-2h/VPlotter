@@ -1,13 +1,40 @@
 import config
+import math
+import global_data
+
+def transform_distance_per_steps(distance):
+    return round(distance / config.length_of_the_rope_per_step)
+
+def calculate_length_right_rope(x, y):
+    return math.sqrt((config.distance_between_motors - x)**2 + y**2)
+
+
+def calculate_length_left_rope(x, y):
+    return math.sqrt(x**2 + y**2)
 
 
 def move(end_x, end_y):
     steps = []
+    
+    start_right_rope_length = calculate_length_right_rope(global_data.current_marker_position_x, global_data.current_marker_position_y)
+    start_left_rope_length = calculate_length_left_rope(global_data.current_marker_position_x, global_data.current_marker_position_y)
+    end_right_rope_length = calculate_length_right_rope(end_x,end_y)
+    end_left_rope_length = calculate_length_left_rope(end_x,end_y)
+    
+    delta_right_rope_length = end_right_rope_length - start_right_rope_length
+    delta_left_rope_length = end_left_rope_length - start_left_rope_length
+    
+    steps_left = transform_distance_per_steps(delta_left_rope_length)
+    steps_right = transform_distance_per_steps(delta_right_rope_length)
+    steps.append(steps_left)
+    steps.append(steps_right)
+    
+    save_steps_to_file(steps)
     # tu generujemy liste krokow potrzebnych do wykonania ruchu
     # tu zapisujemy kroki do pliku
 
 
 def save_steps_to_file(steps) -> None:
     with open(config.steps_file_path, "a") as file:
-        file.writelines(steps)
+        file.writelines(" ".join([str(steps[0]),str(steps[1])])+"\n")
 
