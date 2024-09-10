@@ -14,8 +14,9 @@
 File dataFile;
 
 bool fileEnd = false;
-bool marker_right = true;
-bool marker_left = true;
+bool motor_right_status = true;
+bool motor_left_status = true;
+int motor_speed = 100;
 
 void setup() {
   Serial.begin(9600);
@@ -54,54 +55,37 @@ void loop() {
     return;
   }
 
-  if (marker_right == true && marker_left == true) {
-    marker_right = false;
-    marker_left = false;
+  if (motor_right_status == true && motor_left_status == true) {
+    motor_right_status = false;
+    motor_left_status = false;
 
     if (dataFile) {
       if (dataFile.available()) {
-        int left_motor = 0;
-        int right_motor = 0;
+        int left_motor_steps = 0;
+        int right_motor_steps = 0;
+        int delay_left = 0;
+        int delay_right = 0;
         String couple = dataFile.readStringUntil('\n');
 
-        sscanf(couple.c_str(), "%d %d", &left_motor, &right_motor);
+        sscanf(couple.c_str(), "%d %d", &left_motor_steps, &right_motor_steps);
 
-        Serial.println(left_motor);
-        Serial.println(right_motor);
+        Serial.println(left_motor_steps);
+        Serial.println(right_motor_steps);
 
-        if (right_motor > 0) {
-          for (int i = 0; i == right_motor; i++);
-            digitalWrite(dirPinx, LOW);
-            digitalWrite(stepPinx, HIGH);
-            delayMicroseconds(1000); 
-            digitalWrite(stepPinx, LOW);
-            delayMicroseconds(1000); 
-        } else {
-            for (int i = 0; i == right_motor; i--);
-              digitalWrite(dirPinx, HIGH); 
-              digitalWrite(stepPinx, HIGH);
-              delayMicroseconds(1000); 
-              digitalWrite(stepPinx, LOW);
-              delayMicroseconds(1000); 
-        } 
-        marker_right = true;
-
-        if (left_motor > 0) {
-          for (int i = 0; i == left_motor; i++);
-            digitalWrite(dirPiny, LOW);
-            digitalWrite(stepPiny, HIGH);
-            delayMicroseconds(1000); 
-            digitalWrite(stepPiny, LOW);
-            delayMicroseconds(1000); 
-        } else {
-            for (int i = 0; i == left_motor; i--);
-              digitalWrite(dirPiny, HIGH); 
-              digitalWrite(stepPiny, HIGH);
-              delayMicroseconds(1000); 
-              digitalWrite(stepPiny, LOW);
-              delayMicroseconds(1000); 
+        if (left_motor_steps == right_motor_steps){
+          delay_left = motor_speed;
+          delay_right = motor_speed;
+        } if (left_motor_steps > right_motor_steps){
+          delay_left = (left_motor_steps / right_motor_steps) * motor_speed;
+          delay_right = motor_speed;
+        } if (right_motor_steps > left_motor_steps){
+          delay_right = (right_motor_steps / left_motor_steps) * motor_speed;
+          delay_left = motor_speed;
         }
-        marker_left = true;
+
+        motor_left_status = left_motor(left_motor_steps, delay_left);
+        motor_right_status = right_motor(right_motor_steps, delay_right);
+
 
       } else {
         Serial.println("Koniec danych do wczytania!");
@@ -114,4 +98,48 @@ void loop() {
       fileEnd = true;
     }
   }
+}
+
+
+int left_motor(int steps, int delay_time){
+  if (steps > 0) {
+    for (int i = 0; i == steps; i++);
+      digitalWrite(dirPiny, LOW);
+      digitalWrite(stepPiny, HIGH);
+      delayMicroseconds(1000); 
+      digitalWrite(stepPiny, LOW);
+      delayMicroseconds(1000);
+      delay(delay_time); 
+  } else {
+      for (int i = 0; i == steps; i--);
+        digitalWrite(dirPiny, HIGH); 
+        digitalWrite(stepPiny, HIGH);
+        delayMicroseconds(1000); 
+        digitalWrite(stepPiny, LOW);
+        delayMicroseconds(1000); 
+        delay(delay_time);
+  }
+  return true;
+}
+
+
+int right_motor(int steps, int delay_time){
+  if (steps > 0) {
+    for (int i = 0; i == steps; i++);
+      digitalWrite(dirPinx, LOW);
+      digitalWrite(stepPinx, HIGH);
+      delayMicroseconds(1000); 
+      digitalWrite(stepPinx, LOW);
+      delayMicroseconds(1000); 
+      delay(delay_time);
+  } else {
+      for (int i = 0; i == steps; i--);
+        digitalWrite(dirPinx, HIGH); 
+        digitalWrite(stepPinx, HIGH);
+        delayMicroseconds(1000); 
+        digitalWrite(stepPinx, LOW);
+        delayMicroseconds(1000); 
+        delay(delay_time);
+  } 
+  return true;
 }
