@@ -76,10 +76,10 @@ void loop() {
           delay_left = motor_speed;
           delay_right = motor_speed;
         } if (left_motor_steps > right_motor_steps){
-          delay_left = (left_motor_steps / right_motor_steps) * motor_speed;
+          delay_left = abs(left_motor_steps / right_motor_steps) * motor_speed;
           delay_right = motor_speed;
         } if (right_motor_steps > left_motor_steps){
-          delay_right = (right_motor_steps / left_motor_steps) * motor_speed;
+          delay_right = abs(right_motor_steps / left_motor_steps) * motor_speed;
           delay_left = motor_speed;
         }
 
