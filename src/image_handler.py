@@ -26,7 +26,6 @@ class ImageHandler:
               "Ratio: ", global_data.image_ratio, "Hight in milimeters: ", global_data.final_image_height)
 
     def process_image(self):
-        # czarnobialy obraz + redukcja skali szarosci
         if self.img is not None:
             self.img = self.img.convert("L")
             print("Image converted to grayscale")
@@ -66,18 +65,23 @@ class Line:
         self.pixcels = pixcels
         self.num = num
         self.drawing_direction = self.get_drawing_direction()
+        if self.drawing_direction == "L":
+            self.pixcels = self.pixcels[::-1]
 
     def generate_steps(self):
         for i in range(config.resolution_horizontally):
-            darkness = self.pixcels[round(i/config.resolution_horizontally *
+
+            darkness = self.pixcels[int(i/config.resolution_horizontally *
                                           global_data.image_width_pixcels)]
 
-            """
             if darkness > 0:
                 move(global_data.current_marker_position_x,
                      global_data.current_marker_position_y -
                      global_data.final_image_height/config.resolution_vertically * darkness/config.color_range)
-            """
+                move(global_data.current_marker_position_x,
+                     global_data.current_marker_position_y +
+                     global_data.final_image_height/config.resolution_vertically * darkness/config.color_range)
+
             if self.drawing_direction == "R":
                 move(global_data.current_marker_position_x + global_data.distance_between_pixcels_horizontally,
                      global_data.current_marker_position_y, use_steps_in_reserve=True)

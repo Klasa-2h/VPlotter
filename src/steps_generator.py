@@ -2,12 +2,10 @@ import config
 import math
 import global_data
 
-def transform_distance_per_steps(distance, use_steps_in_reserve=False):
-    if not use_steps_in_reserve:
-        return round(distance / config.length_of_the_rope_per_step), 0
+def transform_distance_per_steps(distance):
     steps = distance / config.length_of_the_rope_per_step
     freaction_remainder = steps - int(steps)
-    return steps, freaction_remainder
+    return int(steps), freaction_remainder
 
 
 def calculate_length_right_rope(x, y):
@@ -20,7 +18,7 @@ def calculate_length_left_rope(x, y):
 
 def move(end_x, end_y, use_steps_in_reserve=False):
     steps = []
-    
+
     start_right_rope_length = calculate_length_right_rope(global_data.current_marker_position_x, global_data.current_marker_position_y)
     start_left_rope_length = calculate_length_left_rope(global_data.current_marker_position_x, global_data.current_marker_position_y)
     end_right_rope_length = calculate_length_right_rope(end_x,end_y)
@@ -28,25 +26,32 @@ def move(end_x, end_y, use_steps_in_reserve=False):
 
     delta_right_rope_length = end_right_rope_length - start_right_rope_length
     delta_left_rope_length = end_left_rope_length - start_left_rope_length
-    
+
     steps_left, left_reserve = transform_distance_per_steps(delta_left_rope_length)
     steps_right, right_reserve = transform_distance_per_steps(delta_right_rope_length)
-    """
-    if use_steps_in_reserve:
-        if abs(global_data.steps_in_reserve_l) >= 1:
-            steps_left += int(global_data.steps_in_reserve_l)
-            global_data.steps_in_reserve_l -= int(global_data.steps_in_reserve_l)
-        if abs(global_data.steps_in_reserve_r) >= 1:
-            steps_right += int(global_data.steps_in_reserve_r)
-            global_data.steps_in_reserve_r -= int(global_data.steps_in_reserve_r)
 
+    if use_steps_in_reserve:
         global_data.steps_in_reserve_l += left_reserve
         global_data.steps_in_reserve_r += right_reserve
-    """
+        if abs(global_data.steps_in_reserve_l) >= 1:
+            if global_data.steps_in_reserve_l < 0:
+                steps_left -= 1
+                global_data.steps_in_reserve_l += 1
+            else:
+                steps_left += 1
+                global_data.steps_in_reserve_l -= 1
+
+        if abs(global_data.steps_in_reserve_r) >= 1:
+            if global_data.steps_in_reserve_r < 0:
+                steps_right -= 1
+                global_data.steps_in_reserve_r += 1
+            else:
+                steps_right += 1
+                global_data.steps_in_reserve_r -= 1
 
     steps.append(steps_left)
     steps.append(steps_right)
-    
+
     save_steps_to_file(steps)
 
     global_data.current_marker_position_x = end_x

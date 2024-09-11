@@ -35,22 +35,6 @@ class Simulation:
         with open(steps_file_path, "r") as steps:
             lines = steps.readlines()
             for line in lines:
-                '''try:
-                    match line.strip():
-                        case "10":
-                            self.rysuj(self.dlugosc_sznurka_na_krok, 0)
-                        case "11":
-                            self.rysuj(-self.dlugosc_sznurka_na_krok, 0)
-                        case "01":
-                            self.rysuj(0, self.dlugosc_sznurka_na_krok)
-                        case "00":
-                            self.rysuj(0, -self.dlugosc_sznurka_na_krok)
-                        case "1":
-                            self.marker = False
-                        case "0":
-                            self.marker = True
-                except Exception:
-                    pass'''
                 data = line.strip()
                 data = data.split(' ')
                 data[0], data[1] = int(data[0]), int(data[1])
