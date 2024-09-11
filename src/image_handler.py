@@ -86,10 +86,10 @@ class Line:
 
             if self.drawing_direction == "R":
                 move(global_data.current_marker_position_x + global_data.distance_between_pixcels_horizontally,
-                     global_data.current_marker_position_y)
+                     global_data.current_marker_position_y, use_steps_in_reserve=True)
             else:
                 move(global_data.current_marker_position_x - global_data.distance_between_pixcels_horizontally,
-                     global_data.current_marker_position_y)
+                     global_data.current_marker_position_y, use_steps_in_reserve=True)
 
     def get_drawing_direction(self):
         return "R" if self.num % 2 == 0 else "L"
