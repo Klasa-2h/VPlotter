@@ -44,18 +44,16 @@ class ImageHandler:
             print(f"Grayscale brightness range reduced to {config.color_range} shades of gray and inverted")
 
     def initialize_image_objects(self):
-        for i, line in enumerate(np.array(self.img)):
-            self.lines.append(Line(line, i))
-
+        img_array = np.array(self.img)
+        for i in range(config.resolution_vertically):
+            self.lines.append(Line(img_array[round(i/config.resolution_vertically * global_data.image_height_pixcels)], i))
         print("Image converted to an array of Line() objects")
 
     def generate_steps(self):
         print("Generating steps...")
 
         for i in range(config.resolution_vertically):
-
-            self.lines[round(i / config.resolution_vertically *
-                             global_data.image_height_pixcels)].generate_steps()
+            self.lines[i].generate_steps()
 
             if i != config.resolution_vertically - 1:
                 move(global_data.current_marker_position_x,
