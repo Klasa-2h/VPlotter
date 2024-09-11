@@ -1,19 +1,19 @@
 import math
 
 
-image_path = "../res/obraz2.jpg"
+image_path = "../res/outlander.jpg"
 steps_file_path = "../res/steps.txt"
 
 
 color_range = 8
 
 
-final_image_width = 150
+final_image_width = 500
 starting_height_from_top = 200
 
 
-resolution_vertically = 70
-resolution_horizontally = 200
+resolution_vertically = 150
+resolution_horizontally = 1000
 
 distance_between_motors = 1000
 motor_diameter = 20

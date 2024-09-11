@@ -65,6 +65,8 @@ class Line:
         self.pixcels = pixcels
         self.num = num
         self.drawing_direction = self.get_drawing_direction()
+        if self.drawing_direction == "L":
+            self.pixcels = self.pixcels[::-1]
 
     def generate_steps(self):
         for i in range(config.resolution_horizontally):
