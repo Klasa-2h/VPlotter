@@ -1,12 +1,14 @@
 import math
 from config import *
+import global_data
 from PIL import Image, ImageDraw
+
 
 class Simulation:
     def __init__(self) -> None:
         self.mm_to_px = 3.9
-        self.value_x = starting_width_from_left*self.mm_to_px
-        self.value_y = starting_height_from_top*self.mm_to_px
+        self.value_x = global_data.starting_x_position*self.mm_to_px
+        self.value_y = global_data.starting_y_position*self.mm_to_px
         self.distance_between_motors = distance_between_motors*self.mm_to_px
         self.l_str_length = math.sqrt(self.value_x**2 + self.value_y**2)
         self.r_str_length = math.sqrt((self.distance_between_motors - self.value_x)**2 + self.value_y**2)
@@ -54,9 +56,7 @@ class Simulation:
                 data[0], data[1] = int(data[0]), int(data[1])
                 try:    
                     self.draw(self.length_of_the_rope_per_step*data[0], self.length_of_the_rope_per_step*data[1])
-                except Exception:
-                    pass
+                except Exception as e:
+                    print(e)
         self.img.show()
         
-sym = Simulation()
-sym.create_simulation()
