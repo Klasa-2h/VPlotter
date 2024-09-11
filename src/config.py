@@ -1,7 +1,7 @@
 import math
 
-image_path = "C:/Users/kwier/OneDrive/Pulpit/rep/VPlotter/res/zadanie2.png"
-steps_file_path = "C:/Users/kwier/OneDrive/Pulpit/rep/VPlotter/res/steps.txt"
+image_path = "C:/Users/murek/Projects/VPlotter/res/zadanie2.png"
+steps_file_path = "C:/Users/murek/Projects/VPlotter/res/steps.txt"
 
 color_range = 8
 
