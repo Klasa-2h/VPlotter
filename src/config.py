@@ -8,12 +8,12 @@ steps_file_path = "../res/steps.txt"
 color_range = 8
 
 
-final_image_width = 250
+final_image_width = 150
 starting_height_from_top = 500
 
 
-resolution_vertically = 15
-resolution_horizontally = 20
+resolution_vertically = 10
+resolution_horizontally = 5
 
 distance_between_motors = 1000
 motor_diameter = 20
