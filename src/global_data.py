@@ -14,3 +14,5 @@ final_image_height = None
 steps_in_reserve_r = 0
 steps_in_reserve_l = 0
 
+starting_x_position = None
+starting_y_position = None

@@ -62,9 +62,6 @@ class ImageHandler:
                      global_data.current_marker_position_y +
                      global_data.final_image_height/config.resolution_vertically)
 
-                print("[go to next line]")
-            else:
-                print("[end]")
 
 class Line:
     def __init__(self, pixcels, num: int):
@@ -77,13 +74,12 @@ class Line:
             darkness = self.pixcels[round(i/config.resolution_horizontally *
                                           global_data.image_width_pixcels)]
 
-            print(darkness, end=" ")
-
+            """
             if darkness > 0:
                 move(global_data.current_marker_position_x,
                      global_data.current_marker_position_y -
                      global_data.final_image_height/config.resolution_vertically * darkness/config.color_range)
-
+            """
             if self.drawing_direction == "R":
                 move(global_data.current_marker_position_x + global_data.distance_between_pixcels_horizontally,
                      global_data.current_marker_position_y, use_steps_in_reserve=True)

@@ -25,13 +25,13 @@ def move(end_x, end_y, use_steps_in_reserve=False):
     start_left_rope_length = calculate_length_left_rope(global_data.current_marker_position_x, global_data.current_marker_position_y)
     end_right_rope_length = calculate_length_right_rope(end_x,end_y)
     end_left_rope_length = calculate_length_left_rope(end_x,end_y)
-    
+
     delta_right_rope_length = end_right_rope_length - start_right_rope_length
     delta_left_rope_length = end_left_rope_length - start_left_rope_length
     
     steps_left, left_reserve = transform_distance_per_steps(delta_left_rope_length)
     steps_right, right_reserve = transform_distance_per_steps(delta_right_rope_length)
-
+    """
     if use_steps_in_reserve:
         if abs(global_data.steps_in_reserve_l) >= 1:
             steps_left += int(global_data.steps_in_reserve_l)
@@ -42,11 +42,15 @@ def move(end_x, end_y, use_steps_in_reserve=False):
 
         global_data.steps_in_reserve_l += left_reserve
         global_data.steps_in_reserve_r += right_reserve
+    """
 
     steps.append(steps_left)
     steps.append(steps_right)
     
     save_steps_to_file(steps)
+
+    global_data.current_marker_position_x = end_x
+    global_data.current_marker_position_y = end_y
 
 
 def save_steps_to_file(steps) -> None:
