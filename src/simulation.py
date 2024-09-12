@@ -32,6 +32,7 @@ class Simulation:
         self.value_x, self.value_y, self.l_str_length, self.r_str_length = end_x, end_y, self.l_str_length+left_string_change, self.r_str_length+right_string_change
         
     def create_simulation(self):
+        print("Rendering simulation...")
         with open(steps_file_path, "r") as steps:
             lines = steps.readlines()
             for line in lines:
@@ -42,5 +43,7 @@ class Simulation:
                     self.draw(self.length_of_the_rope_per_step*data[0], self.length_of_the_rope_per_step*data[1])
                 except Exception as e:
                     print(e)
+        print("Simulation ready to view :)")
+
         self.img.show()
         
