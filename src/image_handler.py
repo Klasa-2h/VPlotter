@@ -58,6 +58,7 @@ class ImageHandler:
                 move(global_data.current_marker_position_x,
                      global_data.current_marker_position_y +
                      global_data.final_image_height/config.resolution_vertically)
+        print("Steps generated")
 
 
 class Line:
