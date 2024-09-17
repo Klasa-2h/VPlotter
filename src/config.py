@@ -1,27 +1,26 @@
-import math
 
-
-image_path = "../res/zadanie2.png"
+image_path = "../res/Untitled.png"
 steps_file_path = "../res/Dane.txt"
 
 
 color_range = 8
 
 
-final_image_width = 200
-starting_height_from_top = 200
-
-
-resolution_vertically = 50
-resolution_horizontally = 400
+final_image_width = 150
+starting_height_from_top = 500
 
 distance_between_motors = 1000
-motor_diameter = 20
-motor_step = 0.1125 * 16
-length_of_the_rope_per_step = motor_step / 360 * motor_diameter * math.pi
-
+motor_diameter = 37
+motor_step_angle = 1.8
 
 simulation_line_thickness = 1
 
 
+# VARIABLES FOR HORIZONTAL LINES DRAWING METHOD
+resolution_vertically = 1
+resolution_horizontally = 10
+
+
+# VARIABLES FOR [...] DRAWING METHOD
+# tutaj beda zmienne dotyczace tylko nowej metody rysowania
 

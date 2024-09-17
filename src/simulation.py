@@ -1,4 +1,3 @@
-import math
 from config import *
 import global_data
 from PIL import Image, ImageDraw
@@ -12,7 +11,7 @@ class Simulation:
         self.distance_between_motors = distance_between_motors*self.mm_to_px
         self.l_str_length = math.sqrt(self.value_x**2 + self.value_y**2)
         self.r_str_length = math.sqrt((self.distance_between_motors - self.value_x)**2 + self.value_y**2)
-        self.length_of_the_rope_per_step = length_of_the_rope_per_step*self.mm_to_px
+        self.length_of_the_rope_per_step = global_data.length_of_the_rope_per_step*self.mm_to_px
 
         self.img = Image.new("RGB", (int(self.distance_between_motors), int(self.distance_between_motors)), "white") #wysokość jako odległość między silnikami
         self.simulation = ImageDraw.Draw(self.img)

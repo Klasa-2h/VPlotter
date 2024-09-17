@@ -1,5 +1,5 @@
 
-from image_handler import ImageHandler
+from image_handler import ImageHandlerHorizontalLines
 import global_data
 import config
 import simulation
@@ -16,12 +16,15 @@ def set_starting_marker_position_as_current():
 
 def create_steps_file():
     open(config.steps_file_path, "w")
-            
+
+
 def main() -> None:
     set_starting_marker_position_as_current()
     create_steps_file()
 
-    img_handler = ImageHandler()
+    # Tutaj bedziemy musieli stworzyc imagehandlera dla tej metody rysowania, ktora zostanie wybrana
+    # aktualnie tworzony jest imagehandler tylko dla istniejacej metody
+    img_handler = ImageHandlerHorizontalLines()
     img_handler.read_image()
     img_handler.process_image()
     img_handler.initialize_image_objects()
