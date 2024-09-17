@@ -5,7 +5,7 @@ import config
 import global_data
 
 
-class ImageHandler:
+class ImageHandlerHorizontalLines:
 
     def __init__(self):
         self.img = None
@@ -93,3 +93,7 @@ class Line:
     def get_drawing_direction(self):
         return "R" if self.num % 2 == 0 else "L"
 
+
+class ImageHandlerNewDrawingMethod:
+    def __init__(self):
+        pass

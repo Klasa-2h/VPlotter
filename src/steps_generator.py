@@ -3,7 +3,7 @@ import math
 import global_data
 
 def transform_distance_per_steps(distance):
-    steps = distance / config.length_of_the_rope_per_step
+    steps = distance / global_data.length_of_the_rope_per_step
     freaction_remainder = steps - int(steps)
     return int(steps), freaction_remainder
 
