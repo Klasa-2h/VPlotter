@@ -1,6 +1,6 @@
 
 image_path = "../res/Untitled.png"
-steps_file_path = "../res/Dane.txt"
+steps_file_path = "../res/duzy_prostokat.txt"
 
 
 color_range = 8
@@ -17,8 +17,8 @@ simulation_line_thickness = 1
 
 
 # VARIABLES FOR HORIZONTAL LINES DRAWING METHOD
-resolution_vertically = 1
-resolution_horizontally = 10
+resolution_vertically = 30
+resolution_horizontally = 50
 
 
 # VARIABLES FOR [...] DRAWING METHOD

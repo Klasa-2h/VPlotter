@@ -1,6 +1,7 @@
 from config import *
 import global_data
 from PIL import Image, ImageDraw
+import math
 
 
 class Simulation:
