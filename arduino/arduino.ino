@@ -12,6 +12,7 @@
 #define stepsPerRevolution 200  
 
 File dataFile;
+File variant;
 
 bool fileEnd = false;
 bool motor_right_status = true;
@@ -30,24 +31,36 @@ void setup() {
 
   digitalWrite(enablePin, LOW);
 
+
   Serial.println("Inicjalizacja karty SD...");
   if (!SD.begin(pinSD)) {
     Serial.println("Błąd inicjalizacji karty SD!");
-    while (1);
+    return;
   }
+
   Serial.println("Inicjalizacja powiodła się pomyślnie!");
+  variant = SD.open("/");
+  if (!variant){
+    Serial.println("Nie można otworzyć katalogu głównego!");
+    while(1);
+  } 
 
-  Serial.println("Weryfikacja zgodności plików...");
-  if (SD.exists("Dane.txt")) {
-    dataFile = SD.open("Dane.txt");
-    Serial.println("Weryfikacja powiodła się!");
-  } else {
-    Serial.println("Weryfikacja nie powiodła się/Brak pliku!");
-    while (1);
+  while (true) {
+    dataFile = variant.openNextFile();  
+
+    if (!dataFile) {
+      Serial.println("Nie znaleziono plików!");
+      while (1); 
+    }
+
+    if (!dataFile.isDirectory()) {
+      Serial.print("Odczytywanie pliku ");
+      Serial.println(dataFile.name());
+      break;  
+    }
   }
-  Serial.println("Dane: ");
 
-  delay(1500);
+  delay(1000);
 }
 
 void loop() {
