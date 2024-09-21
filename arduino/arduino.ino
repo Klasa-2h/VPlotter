@@ -85,15 +85,23 @@ void loop() {
         Serial.println(left_motor_steps);
         Serial.println(right_motor_steps);
 
-        if (left_motor_steps == right_motor_steps){
-          delay_left = motor_speed;
-          delay_right = motor_speed;
-        } if (left_motor_steps > right_motor_steps){
-          delay_left = abs(left_motor_steps / right_motor_steps) * motor_speed;
-          delay_right = motor_speed;
-        } if (right_motor_steps > left_motor_steps){
-          delay_right = abs(right_motor_steps / left_motor_steps) * motor_speed;
-          delay_left = motor_speed;
+        if (left_motor_steps == 0 || right_motor steps == 0 || left_motor_steps == right_motor_steps){
+          if (left_motor_steps == right_motor_steps){
+            delay_left = motor_speed;
+            delay_right = motor_speed;
+          } if (left_motor_steps == 0){
+            delay_right = motor_speed;
+          } if (right_motor_speed == 0){
+            delay_left = motor_speed;
+          }
+        } else {
+          if (left_motor_steps > right_motor_steps){
+            delay_left = abs(left_motor_steps / right_motor_steps) * motor_speed;
+            delay_right = motor_speed;
+          } if (right_motor_steps > left_motor_steps){
+            delay_right = abs(right_motor_steps / left_motor_steps) * motor_speed;
+            delay_left = motor_speed;
+          }
         }
 
         motor_left_status = left_motor(left_motor_steps, delay_left);
@@ -115,6 +123,10 @@ void loop() {
 
 
 int left_motor(int steps, int delay_time){
+  if (steps == 0){
+    return true;
+  }
+
   if (steps > 0) {
     for (int i = 0; i == steps; i++);
       digitalWrite(dirPiny, LOW);
@@ -137,6 +149,10 @@ int left_motor(int steps, int delay_time){
 
 
 int right_motor(int steps, int delay_time){
+  if (steps == 0){
+    return true;
+  }
+
   if (steps > 0) {
     for (int i = 0; i == steps; i++);
       digitalWrite(dirPinx, LOW);
