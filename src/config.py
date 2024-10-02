@@ -1,5 +1,5 @@
 
-image_path = "../res/Untitled.png"
+image_path = "../res/zadanie2.png"
 steps_file_path = "../res/duzy_prostokat.txt"
 
 
