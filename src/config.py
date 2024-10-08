@@ -1,6 +1,6 @@
 
-image_path = 'C:/Users/murek/Projects/VPlotter/res/obraz.jpg'
-steps_file_path = 'C:/Users/murek/Projects/VPlotter/res/Dane.txt'
+image_path = 'C:/Users/murek/Projects/VPlotter/res/Untitled.png'
+steps_file_path = 'C:/Users/murek/Projects/VPlotter/res/Dinopociung.txt'
 
 
 color_range = 8
@@ -17,8 +17,8 @@ simulation_line_thickness = 1
 
 
 # VARIABLES FOR HORIZONTAL LINES DRAWING METHOD
-resolution_vertically = 30
-resolution_horizontally = 50
+resolution_vertically = 10
+resolution_horizontally = 10
 
 
 # VARIABLES FOR [...] DRAWING METHOD
