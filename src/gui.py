@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 import time
-#import main
+import main
 import config
 
 
@@ -39,9 +39,9 @@ def save_to_config(entries_list,  steps_entry, file_entry):
     for i in range(len(lines)):
         for a in config_attributes:
             if lines[i].startswith(a):
-#                 if a == "image_path" or a == "steps_file_path":  # Handle file paths as strings
-#                     lines[i] = "{} = '{}'\n".format(a, getattr(config, a))
-#                 else:
+                if a == "image_path" or a == "steps_file_path":  # Handle file paths as strings
+                     lines[i] = "{} = '{}'\n".format(a, getattr(config, a))
+                else:
                     lines[i] = "{} = {}\n".format(a, getattr(config, a))
     with open('config.py', 'w') as f:
         f.writelines(lines)
@@ -50,8 +50,8 @@ def save_to_config(entries_list,  steps_entry, file_entry):
         
 def steps_generator_button():
     print("Button.")
-    #main.main()
-    generated_image_path = "C:/Users/kwier/OneDrive/Pulpit/rep/image.jpg"
+    main.main()
+    generated_image_path = "logo.png"
     show_loading(generated_image_path)
 
 
@@ -98,7 +98,7 @@ window.title("Vplotter GUI")
 
 
 # LOGO
-image = tk.PhotoImage(file="image4.png")
+image = tk.PhotoImage(file="logo.png")
 window.iconphoto(False, image)
 label_photo = tk.Label(window, image=image)
 label_photo.place(x=20, y =20)
@@ -114,11 +114,11 @@ open_file_steps_button = tk.Button(window, text="Select steps file", command=lam
 
 file_path_entry = tk.Entry(window, width=55)
 file_path_entry.place(x=30,y=170)
-file_path_entry.insert(1, "Select file or enter file path")
+file_path_entry.insert(1, config.image_path)
 
 file_path_steps_entry = tk.Entry(window, width=55)
 file_path_steps_entry.place(x=30,y=280)
-file_path_steps_entry.insert(1, "Select steps file or enter steps file path")
+file_path_steps_entry.insert(1, config.steps_file_path)
 
 
 
