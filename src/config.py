@@ -17,8 +17,8 @@ simulation_line_thickness = 1
 
 
 # VARIABLES FOR HORIZONTAL LINES DRAWING METHOD
-resolution_vertically = 10
-resolution_horizontally = 10
+resolution_vertically = 50
+resolution_horizontally = 300
 
 
 # VARIABLES FOR [...] DRAWING METHOD
