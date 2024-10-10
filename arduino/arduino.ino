@@ -15,7 +15,7 @@ File variant;
 bool fileEnd = false;
 bool motor_right_status = true;
 bool motor_left_status = true;
-int motor_speed = 125;
+int motor_speed = 100;
 
 void setup() {
   Serial.begin(9600);
@@ -58,7 +58,7 @@ void setup() {
     }
   }
 
-  delay(2000);
+  delay(1500);
 }
 
 void loop() {
@@ -74,8 +74,6 @@ void loop() {
       if (dataFile.available()) {
         int left_motor_steps = 0;
         int right_motor_steps = 0;
-        int delay_left = 0;
-        int delay_right = 0;
         String couple = dataFile.readStringUntil('\n');
 
         sscanf(couple.c_str(), "%d %d", &left_motor_steps, &right_motor_steps);
@@ -83,21 +81,9 @@ void loop() {
         Serial.println(left_motor_steps);
         Serial.println(right_motor_steps);
 
-        if (left_motor_steps == 0 || right_motor_steps == 0 || left_motor_steps == right_motor_steps){
-          delay_left = motor_speed;
-          delay_right = motor_speed;
-        } else {
-            if (abs(left_motor_steps) > abs(right_motor_steps)){
-              delay_left = calculate_delay(left_motor_steps, right_motor_steps, motor_speed, true);
-              delay_right = motor_speed;             
-            } if (abs(right_motor_steps) > abs(left_motor_steps)){
-              delay_right = calculate_delay(left_motor_steps, right_motor_steps, motor_speed, false);
-              delay_left = motor_speed;                
-            }
-        }
 
-        motor_left_status = left_motor(left_motor_steps, delay_left);
-        motor_right_status = right_motor(right_motor_steps, delay_right);
+        motor_left_status = left_motor(left_motor_steps, motor_speed);
+        motor_right_status = right_motor(right_motor_steps, motor_speed);
 
 
       } else {
@@ -111,20 +97,6 @@ void loop() {
       fileEnd = true;
     }
   }
-}
-
-
-int calculate_delay(float stepsL, float stepsR, int basic_speed_value, bool bigger_left){
-  float delay_value = 0;
-  stepsL = abs(stepsL);
-  stepsR = abs(stepsR);
-
-  if (bigger_left == true){
-    delay_value = (stepsL / stepsR) * basic_speed_value;
-  } else {
-    delay_value = (stepsR / stepsL) * basic_speed_value;
-  }
-  return delay_value;
 }
 
 
