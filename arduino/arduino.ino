@@ -15,7 +15,7 @@ File variant;
 bool fileEnd = false;
 bool motor_right_status = true;
 bool motor_left_status = true;
-int motor_speed = 100;
+int motor_speed = 80;
 
 void setup() {
   Serial.begin(9600);
@@ -28,7 +28,6 @@ void setup() {
   pinMode(dirPiny, OUTPUT);
 
   digitalWrite(enablePin, LOW);
-
 
   Serial.println("Inicjalizacja karty SD...");
   if (!SD.begin(pinSD)) {
@@ -58,7 +57,7 @@ void setup() {
     }
   }
 
-  delay(1500);
+  delay(1000);
 }
 
 void loop() {
@@ -81,14 +80,13 @@ void loop() {
         Serial.println(left_motor_steps);
         Serial.println(right_motor_steps);
 
-
         motor_left_status = left_motor(left_motor_steps, motor_speed);
         motor_right_status = right_motor(right_motor_steps, motor_speed);
-
 
       } else {
         Serial.println("Koniec danych do wczytania!");
         dataFile.close();
+        digitalWrite(enablePin, HIGH);
         fileEnd = true;
       }
 
@@ -106,20 +104,20 @@ int left_motor(int steps, int delay_time){
   }
 
   if (steps > 0) {
-      digitalWrite(dirPiny, LOW);
-    for (int i = 0; i <= steps; i++){
-      digitalWrite(stepPiny, HIGH);
+    digitalWrite(dirPinx, LOW);
+    for (int i = 0; i < steps; i++){
+      digitalWrite(stepPinx, HIGH);
       delayMicroseconds(1000); 
-      digitalWrite(stepPiny, LOW);
+      digitalWrite(stepPinx, LOW);
       delayMicroseconds(1000);
       delay(delay_time); 
     }
   } else {
-      digitalWrite(dirPiny, HIGH); 
-      for (int i = 0; i <= abs(steps); i++){
-        digitalWrite(stepPiny, HIGH);
+      digitalWrite(dirPinx, HIGH); 
+      for (int i = 0; i < abs(steps); i++){
+        digitalWrite(stepPinx, HIGH);
         delayMicroseconds(1000); 
-        digitalWrite(stepPiny, LOW);
+        digitalWrite(stepPinx, LOW);
         delayMicroseconds(1000); 
         delay(delay_time);
       }
@@ -134,20 +132,20 @@ int right_motor(int steps, int delay_time){
   }
 
   if (steps > 0) {
-    digitalWrite(dirPinx, LOW);
-    for (int i = 0; i <= steps; i++){
-      digitalWrite(stepPinx, HIGH);
+    digitalWrite(dirPiny, HIGH);
+    for (int i = 0; i < steps; i++){
+      digitalWrite(stepPiny, HIGH);
       delayMicroseconds(1000); 
-      digitalWrite(stepPinx, LOW);
+      digitalWrite(stepPiny, LOW);
       delayMicroseconds(1000); 
       delay(delay_time);
     }
   } else {
-      digitalWrite(dirPinx, HIGH); 
-      for (int i = 0; i <= abs(steps); i++){
-        digitalWrite(stepPinx, HIGH);
+      digitalWrite(dirPiny, LOW); 
+      for (int i = 0; i < abs(steps); i++){
+        digitalWrite(stepPiny, HIGH);
         delayMicroseconds(1000); 
-        digitalWrite(stepPinx, LOW);
+        digitalWrite(stepPiny, LOW);
         delayMicroseconds(1000); 
         delay(delay_time);
       }
