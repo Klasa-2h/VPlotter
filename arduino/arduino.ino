@@ -13,21 +13,18 @@ File dataFile;
 File variant;
 
 bool fileEnd = false;
-bool motor_right_status = true;
-bool motor_left_status = true;
-int motor_speed = 80;
+int motor_speed = 65;
 
 void setup() {
   Serial.begin(9600);
 
   pinMode(enablePin, OUTPUT);
+  digitalWrite(enablePin, LOW);
 
   pinMode(stepPinx, OUTPUT);
   pinMode(dirPinx, OUTPUT);
   pinMode(stepPiny, OUTPUT);
   pinMode(dirPiny, OUTPUT);
-
-  digitalWrite(enablePin, LOW);
 
   Serial.println("Inicjalizacja karty SD...");
   if (!SD.begin(pinSD)) {
@@ -39,6 +36,7 @@ void setup() {
   variant = SD.open("/");
   if (!variant){
     Serial.println("Nie można otworzyć katalogu głównego!");
+    digitalWrite(enablePin, HIGH);
     while(1);
   } 
 
@@ -47,7 +45,8 @@ void setup() {
 
     if (!dataFile) {
       Serial.println("Nie znaleziono plików!");
-      while (1); 
+      digitalWrite(enablePin, HIGH);
+      while(1); 
     }
 
     if (!dataFile.isDirectory()) {
@@ -65,35 +64,31 @@ void loop() {
     return;
   }
 
-  if (motor_right_status == true && motor_left_status == true) {
-    motor_right_status = false;
-    motor_left_status = false;
+  if (dataFile) {
+    if (dataFile.available()) {
+      int left_motor_steps = 0;
+      int right_motor_steps = 0;
+      String couple = dataFile.readStringUntil('\n');
 
-    if (dataFile) {
-      if (dataFile.available()) {
-        int left_motor_steps = 0;
-        int right_motor_steps = 0;
-        String couple = dataFile.readStringUntil('\n');
+      sscanf(couple.c_str(), "%d %d", &left_motor_steps, &right_motor_steps);
 
-        sscanf(couple.c_str(), "%d %d", &left_motor_steps, &right_motor_steps);
+      Serial.println(left_motor_steps);
+      Serial.println(right_motor_steps);
 
-        Serial.println(left_motor_steps);
-        Serial.println(right_motor_steps);
-
-        motor_left_status = left_motor(left_motor_steps, motor_speed);
-        motor_right_status = right_motor(right_motor_steps, motor_speed);
-
-      } else {
-        Serial.println("Koniec danych do wczytania!");
-        dataFile.close();
-        digitalWrite(enablePin, HIGH);
-        fileEnd = true;
-      }
+      left_motor(left_motor_steps, motor_speed);
+      right_motor(right_motor_steps, motor_speed);
 
     } else {
-      Serial.println("Błąd otwarcia pliku!");
+      Serial.println("Koniec danych do wczytania!");
+      dataFile.close();
+      digitalWrite(enablePin, HIGH);
       fileEnd = true;
     }
+
+  } else {
+    Serial.println("Błąd otwarcia pliku!");
+    digitalWrite(enablePin, HIGH);
+    fileEnd = true;
   }
 }
 
@@ -105,22 +100,18 @@ int left_motor(int steps, int delay_time){
 
   if (steps > 0) {
     digitalWrite(dirPinx, LOW);
-    for (int i = 0; i < steps; i++){
+    digitalWrite(stepPinx, HIGH);
+    delayMicroseconds(1000); 
+    digitalWrite(stepPinx, LOW);
+    delayMicroseconds(1000);
+    delay(delay_time); 
+  } else {
+      digitalWrite(dirPinx, HIGH); 
       digitalWrite(stepPinx, HIGH);
       delayMicroseconds(1000); 
       digitalWrite(stepPinx, LOW);
-      delayMicroseconds(1000);
-      delay(delay_time); 
-    }
-  } else {
-      digitalWrite(dirPinx, HIGH); 
-      for (int i = 0; i < abs(steps); i++){
-        digitalWrite(stepPinx, HIGH);
-        delayMicroseconds(1000); 
-        digitalWrite(stepPinx, LOW);
-        delayMicroseconds(1000); 
-        delay(delay_time);
-      }
+      delayMicroseconds(1000); 
+      delay(delay_time);
   }
   return true;
 }
@@ -133,22 +124,18 @@ int right_motor(int steps, int delay_time){
 
   if (steps > 0) {
     digitalWrite(dirPiny, HIGH);
-    for (int i = 0; i < steps; i++){
+    digitalWrite(stepPiny, HIGH);
+    delayMicroseconds(1000); 
+    digitalWrite(stepPiny, LOW);
+    delayMicroseconds(1000); 
+    delay(delay_time);
+  } else {
+      digitalWrite(dirPiny, LOW); 
       digitalWrite(stepPiny, HIGH);
       delayMicroseconds(1000); 
       digitalWrite(stepPiny, LOW);
       delayMicroseconds(1000); 
       delay(delay_time);
-    }
-  } else {
-      digitalWrite(dirPiny, LOW); 
-      for (int i = 0; i < abs(steps); i++){
-        digitalWrite(stepPiny, HIGH);
-        delayMicroseconds(1000); 
-        digitalWrite(stepPiny, LOW);
-        delayMicroseconds(1000); 
-        delay(delay_time);
-      }
   } 
   return true;
 }
