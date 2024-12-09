@@ -13,7 +13,7 @@ File dataFile;
 File variant;
 
 bool fileEnd = false;
-int motor_speed = 15;
+int motor_speed = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -72,7 +72,7 @@ void loop() {
       int right_motor_steps = 0;
       String couple = dataFile.readStringUntil('\n');
 
-      sscanf(couple.c_str(), "%d %d", &right_motor_steps, &left_motor_steps);
+      sscanf(couple.c_str(), "%d %d", &left_motor_steps, &right_motor_steps);
 
       Serial.println(left_motor_steps);
       Serial.println(right_motor_steps);
@@ -95,32 +95,7 @@ void loop() {
   }
 }
 
-
 int left_motor(int steps, int delay_time){
-  if (steps == 0){
-    return true;
-  }
-
-  if (steps > 0) {
-    digitalWrite(dirPiny, HIGH);
-    digitalWrite(stepPiny, HIGH);
-    delayMicroseconds(1000); 
-    digitalWrite(stepPiny, LOW);
-    delayMicroseconds(1000);
-    delay(delay_time); 
-  } else {
-      digitalWrite(dirPiny, LOW); 
-      digitalWrite(stepPiny, HIGH);
-      delayMicroseconds(1000); 
-      digitalWrite(stepPiny, LOW);
-      delayMicroseconds(1000); 
-      delay(delay_time);
-  }
-  return true;
-}
-
-
-int right_motor(int steps, int delay_time){
   if (steps == 0){
     return true;
   }
@@ -140,5 +115,28 @@ int right_motor(int steps, int delay_time){
       delayMicroseconds(1000); 
       delay(delay_time);
   } 
+  return true;
+}
+
+int right_motor(int steps, int delay_time){
+  if (steps == 0){
+    return true;
+  }
+
+  if (steps > 0) {
+    digitalWrite(dirPiny, HIGH);
+    digitalWrite(stepPiny, HIGH);
+    delayMicroseconds(1000); 
+    digitalWrite(stepPiny, LOW);
+    delayMicroseconds(1000);
+    delay(delay_time); 
+  } else {
+      digitalWrite(dirPiny, LOW); 
+      digitalWrite(stepPiny, HIGH);
+      delayMicroseconds(1000); 
+      digitalWrite(stepPiny, LOW);
+      delayMicroseconds(1000); 
+      delay(delay_time);
+  }
   return true;
 }
