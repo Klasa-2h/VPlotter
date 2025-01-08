@@ -1,7 +1,9 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
-import simulation, main, config 
+import time
+import main
+import config
 
 
 def create_label(text, font, x_co, y_co):
@@ -43,20 +45,22 @@ def save_to_config(entries_list,  steps_entry, file_entry):
                     lines[i] = "{} = {}\n".format(a, getattr(config, a))
     with open('config.py', 'w') as f:
         f.writelines(lines)
-    steps_generator_button()
+    steps_generator_button()  
         
         
 def steps_generator_button():
-    global generated_image_path
     print("Button.")
+    main.main()
+    generated_image_path = "logo.png"
+    show_loading(generated_image_path)
+
+
+def show_loading(image_path):
     canvas.delete("all") 
     canvas.create_text(205, 200, text="Loading...", font=("Arial", 24), fill="black")
-    window.update()
-    main.set_starting_marker_position_as_current()
-    main.main()
-    sim = simulation.Simulation()
-    generated_image_path = sim.create_simulation()
-    show_image(generated_image_path)
+    window.update() 
+    time.sleep(2)
+    show_image(image_path)
 
 
 def resize_image(image, max_width, max_height):
@@ -77,23 +81,17 @@ def show_image(image_path):
     
 
 def save_file():
-    global generated_image_path
-    if generated_image_path:
-        file_path = filedialog.asksaveasfilename(defaultextension=".png",filetypes=[("PNG files", "*.png"), ("JPEG files", "*.jpg"), ("All files", "*.*")])
-        if file_path:
-            image = Image.open(generated_image_path)
-            image.save(file_path)
-            print(f"Simulation saved as: {file_path}")
-    else:
-        messagebox.showerror("Error", "No simulation image to save.")
+    file_path = filedialog.asksaveasfilename(defaultextension=".png",filetypes=[("PNG files", "*.png"), ("JPEG files", "*.jpg"), ("All files", "*.*")])
+    if file_path:
+        image = Image.open("example_image.png")
+        image.save(file_path)
+        print(f"Simulation saved as: {file_path}")
 
 
 # WINDOW
 window = tk.Tk()
 screen_width = window.winfo_screenwidth()
 screen_height = window.winfo_screenheight()
-scale_factor_w = (screen_width / 1920)*100
-scale_factor_h = (screen_height / 1080)*100
 window.geometry(f"{screen_width}x{screen_height}+0+0")
 #window.attributes('-fullscreen', True)
 window.title("Vplotter GUI")
@@ -103,7 +101,7 @@ window.title("Vplotter GUI")
 image = tk.PhotoImage(file="logo.png")
 window.iconphoto(False, image)
 label_photo = tk.Label(window, image=image)
-label_photo.place(x=int(20*scale_factor_w/100), y =int(20*scale_factor_w/100))
+label_photo.place(x=20, y =20)
 label_title = create_label("Vplotter GUI", ("Arial", 30, "bold"), 115,35)
 
 
@@ -111,10 +109,10 @@ label_title = create_label("Vplotter GUI", ("Arial", 30, "bold"), 115,35)
 label2 = create_label("Photo file location:", ("Arial", 20),30, 120)
 label3 = create_label("Steps file location:", ("Arial", 20), 30, 230)
 
-open_file_button = tk.Button(window, text="Select image file", command=lambda:open_file_explorer("image"),  font = ("Arial", 12), width=int(15*scale_factor_w/100), height=int(1*scale_factor_h/100), bg="#b3b1b1", activebackground="#8c8989").place(x=270,y=125)
-open_file_steps_button = tk.Button(window, text="Select steps file", command=lambda:open_file_explorer("steps"),  font = ("Arial", 12), width=int(15*scale_factor_w/100), height=int(1*scale_factor_h/100), bg="#b3b1b1", activebackground="#8c8989").place(x=270,y=235)
+open_file_button = tk.Button(window, text="Select image file", command=lambda:open_file_explorer("image"),  font = ("Arial", 12), width=15, height=1, bg="#b3b1b1", activebackground="#8c8989").place(x=270,y=125)
+open_file_steps_button = tk.Button(window, text="Select steps file", command=lambda:open_file_explorer("steps"),  font = ("Arial", 12), width=15, height=1, bg="#b3b1b1", activebackground="#8c8989").place(x=270,y=235)
 
-file_path_entry = tk.Entry(window, width=int(55*scale_factor_w/100))
+file_path_entry = tk.Entry(window, width=55)
 file_path_entry.place(x=30,y=170)
 file_path_entry.insert(1, config.image_path)
 
@@ -142,7 +140,7 @@ for i in range(len(config_text_label)):
 
 # STYLE
 label12 = create_label("Style:",("Arial",15), 450, 50)
-style_list = ["Lines", "Soon", "Soon"]
+style_list = ["Lines", "Spirals", "Contours"]
 clicked = tk.StringVar()
 clicked.set(style_list[0])
 options = tk.OptionMenu(window, clicked, *style_list)
