@@ -29,6 +29,8 @@ def main() -> None:
     img_handler.process_image()
     img_handler.initialize_image_objects()
     img_handler.generate_steps()
+    sim = simulation.Simulation()
+    sim.create_simulation()
 
 
 if __name__=="__main__":
