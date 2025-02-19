@@ -6,21 +6,21 @@
 #define stepPiny 3
 #define dirPiny 6
 
+#define button 9
+
 #define enablePin 8
 #define pinSD 10
-
-#define button 9
 
 File dataFile;
 File variant;
 
-int motor_speed = 10;
+int motor_speed = 4;
 int left_motor_steps = 0;
 int right_motor_steps = 0;
 
 void setup() {
   pinMode(enablePin, OUTPUT);
-  digitalWrite(enablePin, LOW);
+  digitalWrite(enablePin, HIGH);
   
   pinMode(button, INPUT_PULLUP);
 
@@ -52,12 +52,13 @@ void setup() {
   }
 
   load_data();
-
+ 
   while (digitalRead(button) == HIGH){
 
   }
 
-  delay(200);
+  digitalWrite(enablePin, LOW);
+  delay(700);
 }
 
 void loop() {
