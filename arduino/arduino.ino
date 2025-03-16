@@ -6,7 +6,8 @@
 #define stepPiny 3
 #define dirPiny 6
 
-#define button 9
+#define startStopButton A1
+#define pauseButton A0
 
 #define enablePin 8
 #define pinSD 10
@@ -21,8 +22,9 @@ int right_motor_steps = 0;
 void setup() {
   pinMode(enablePin, OUTPUT);
   digitalWrite(enablePin, HIGH);
-  
-  pinMode(button, INPUT_PULLUP);
+
+  pinMode(startStopButton, INPUT_PULLUP);
+  pinMode(pauseButton, INPUT_PULLUP);
 
   pinMode(stepPinx, OUTPUT);
   pinMode(dirPinx, OUTPUT);
@@ -53,47 +55,44 @@ void setup() {
 
   load_data();
  
-  while (digitalRead(button) == HIGH){
-
-  }
+  while (digitalRead(startStopButton) == HIGH){}
 
   digitalWrite(enablePin, LOW);
   delay(700);
 }
 
 void loop() {
-  if (digitalRead(button) == LOW){
-    stopAll();
+  if (digitalRead(startStopButton) == LOW){stopAll();}
+  if (digitalRead(pauseButton) == LOW){
+    delay(200);
+    while(true){
+      if (digitalRead(pauseButton) == LOW){
+        delay(300);
+        break;
+      }
+    }
   }
 
   int left_direction = LOW;
   int right_direction = LOW;
 
-  if (left_motor_steps < 0) {
-    left_direction = HIGH;
-  } if (right_motor_steps > 0) {
-    right_direction = HIGH;
-  }
+  if (left_motor_steps < 0) {left_direction = HIGH;} 
+  if (right_motor_steps > 0) {right_direction = HIGH;}
 
-  left_motor_steps = abs(left_motor_steps);
-  right_motor_steps = abs(right_motor_steps);
+  // Left motor
+  digitalWrite(dirPinx, left_direction);
+  digitalWrite(stepPinx, HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(stepPinx, LOW);
+  delayMicroseconds(1000);
 
-  if (left_motor_steps > 0) {
-    digitalWrite(dirPinx, left_direction);
-    digitalWrite(stepPinx, HIGH);
-    delayMicroseconds(1000);
-    digitalWrite(stepPinx, LOW);
-    delayMicroseconds(1000);
-    left_motor_steps--;
-  }
-  if (right_motor_steps > 0) {
-    digitalWrite(dirPiny, right_direction);
-    digitalWrite(stepPiny, HIGH);
-    delayMicroseconds(1000);
-    digitalWrite(stepPiny, LOW);
-    delayMicroseconds(1000);
-    right_motor_steps--;
-  }
+  // Right motor
+  digitalWrite(dirPiny, right_direction);
+  digitalWrite(stepPiny, HIGH);
+  delayMicroseconds(1000);
+  digitalWrite(stepPiny, LOW);
+  delayMicroseconds(1000);
+
   load_data();
   delay(motor_speed);
 }
