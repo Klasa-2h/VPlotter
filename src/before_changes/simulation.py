@@ -2,8 +2,6 @@ from config import *
 import global_data
 from PIL import Image, ImageDraw
 import math
-import tempfile
-import os
 
 
 class Simulation:
@@ -47,9 +45,5 @@ class Simulation:
                     print(e)
         print("Simulation ready to view :)")
 
-        # Save the image and return the file path
-        temp_dir = tempfile.gettempdir()  # Ścieżka do katalogu tymczasowego
-        generated_image_path = os.path.join(temp_dir, "simulation_preview.png")
-        self.img.save(generated_image_path)
-        return generated_image_path
+        self.img.show()
         

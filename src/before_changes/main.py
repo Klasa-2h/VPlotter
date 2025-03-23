@@ -1,9 +1,8 @@
 
-from image_handler import ImageHandlerHorizontalLines, SvgHandler
+from image_handler import ImageHandlerHorizontalLines
 import global_data
 import config
 import simulation
-import os
 
 
 def set_starting_marker_position_as_current():
@@ -23,22 +22,15 @@ def main() -> None:
     set_starting_marker_position_as_current()
     create_steps_file()
 
-
-    if config.image_path.split(".")[-1] in ["png", "jpg", "jpeg"]:
-        img_handler = ImageHandlerHorizontalLines()
-        img_handler.read_image()
-        img_handler.process_image()
-        img_handler.initialize_image_objects()
-        img_handler.generate_steps()
-    elif config.image_path.split(".")[-1] in ["svg"]:
-        img_handler = SvgHandler()
-        img_handler.parse_and_get_root()
-        img_handler.parse_raw_vectors()
-        img_handler.generate_steps()
-
+    # Tutaj bedziemy musieli stworzyc imagehandlera dla tej metody rysowania, ktora zostanie wybrana
+    # aktualnie tworzony jest imagehandler tylko dla istniejacej metody
+    img_handler = ImageHandlerHorizontalLines()
+    img_handler.read_image()
+    img_handler.process_image()
+    img_handler.initialize_image_objects()
+    img_handler.generate_steps()
     sim = simulation.Simulation()
     sim.create_simulation()
-
 
 
 if __name__=="__main__":
