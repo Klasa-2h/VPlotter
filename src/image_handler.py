@@ -3,6 +3,8 @@ from PIL import Image
 from steps_generator import move
 import config
 import global_data
+import xml.etree.ElementTree as ET
+from svgoutline import svg_to_outlines
 
 
 class ImageHandlerHorizontalLines:
@@ -94,6 +96,25 @@ class Line:
         return "R" if self.num % 2 == 0 else "L"
 
 
-class ImageHandlerNewDrawingMethod:
+class SvgHandler:
     def __init__(self):
-        pass
+        self.vectors = []
+        self.tree = None
+        self.root = None
+        self.outlines = None
+
+    def parse_and_get_root(self):
+        self.tree = ET.parse(config.image_path)
+        self.root = self.tree.getroot()
+
+    def parse_raw_vectors(self):
+        self.outlines = svg_to_outlines(self.root)
+        for line in self.outlines:
+            self.vectors += line[2]
+
+
+    def generate_steps(self):
+        for i in range(1, len(self.vectors)):
+            move(config.starting_x +self.vectors[i][0], config.starting_height_from_top + self.vectors[i][1])
+
+
