@@ -8,6 +8,7 @@
 
 #define startStopButton A1
 #define pauseButton A0
+#define redLed A2
 
 #define enablePin 8
 #define pinSD 10
@@ -30,6 +31,7 @@ void setup() {
   pinMode(dirPinx, OUTPUT);
   pinMode(stepPiny, OUTPUT);
   pinMode(dirPiny, OUTPUT);
+  pinMode(redLed, OUTPUT);
 
 
   if (!SD.begin(pinSD)) {
@@ -64,9 +66,11 @@ void setup() {
 void loop() {
   if (digitalRead(startStopButton) == LOW){stopAll();}
   if (digitalRead(pauseButton) == LOW){
+    digitalWrite(redLed, HIGH);
     delay(200);
     while(true){
       if (digitalRead(pauseButton) == LOW){
+        digitalWrite(redLed, LOW);
         delay(300);
         break;
       }
@@ -80,18 +84,22 @@ void loop() {
   if (right_motor_steps > 0) {right_direction = HIGH;}
 
   // Left motor
-  digitalWrite(dirPinx, left_direction);
-  digitalWrite(stepPinx, HIGH);
-  delayMicroseconds(1000);
-  digitalWrite(stepPinx, LOW);
-  delayMicroseconds(1000);
-
+  if (left_motor_steps != 0) {
+    digitalWrite(dirPinx, left_direction);
+    digitalWrite(stepPinx, HIGH);
+    delayMicroseconds(1000);
+    digitalWrite(stepPinx, LOW);
+    delayMicroseconds(1000);
+  }
+  
   // Right motor
-  digitalWrite(dirPiny, right_direction);
-  digitalWrite(stepPiny, HIGH);
-  delayMicroseconds(1000);
-  digitalWrite(stepPiny, LOW);
-  delayMicroseconds(1000);
+  if (right_motor_steps != 0) {
+    digitalWrite(dirPiny, right_direction);
+    digitalWrite(stepPiny, HIGH);
+    delayMicroseconds(1000);
+    digitalWrite(stepPiny, LOW);
+    delayMicroseconds(1000);
+  }
 
   load_data();
   delay(motor_speed);
